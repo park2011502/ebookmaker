@@ -28,7 +28,7 @@ const MINOR_PAGES = [
   { suit: "컵 (Cups) — 감정과 로맨스", cards: [{ file: "Cups13.jpg", name: "컵 퀸" }, { file: "Cups14.jpg", name: "컵 킹" }, { file: "Wands01.jpg", name: "완드 에이스" }, { file: "Wands02.jpg", name: "완드 2" }] },
   // 완드
   { suit: "완드 (Wands) — 열정과 욕망", cards: [{ file: "Wands03.jpg", name: "완드 3" }, { file: "Wands04.jpg", name: "완드 4" }, { file: "Wands05.jpg", name: "완드 5" }, { file: "Wands06.jpg", name: "완드 6" }] },
-  { suit: "완드 (Wands) — 열정과 욕망", cards: [{ file: "Wands07.jpg", name: "완드 7" }, { file: "Wands08.jpg", name: "완드 8" }, { file: "Wands09.jpg", name: "완드 9" }, { file: "Wands10.jpg", name: "완드 10" }] },
+  { suit: "완드 (Wands) — 열정과 욕망", cards: [{ file: "Wands07.jpg", name: "완드 7" }, { file: "Wands08.jpg", name: "완드 8" }, { file: "Tarot_Nine_of_Wands.jpg", name: "완드 9" }, { file: "Wands10.jpg", name: "완드 10" }] },
   { suit: "완드 (Wands) — 열정과 욕망", cards: [{ file: "Wands11.jpg", name: "완드 페이지" }, { file: "Wands12.jpg", name: "완드 나이트" }, { file: "Wands13.jpg", name: "완드 퀸" }, { file: "Wands14.jpg", name: "완드 킹" }] },
   // 검
   { suit: "검 (Swords) — 갈등과 결단", cards: [{ file: "Swords01.jpg", name: "검 에이스" }, { file: "Swords02.jpg", name: "검 2" }, { file: "Swords03.jpg", name: "검 3" }, { file: "Swords04.jpg", name: "검 4" }] },
