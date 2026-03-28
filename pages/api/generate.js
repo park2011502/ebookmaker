@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     });
 
     const response = await client.messages.create({
-      model: "claude-3-sonnet",
+      model: "claude-3-5-sonnet-latest",
       max_tokens: 2000,
       messages: [
         {
@@ -17,7 +17,7 @@ export default async function handler(req, res) {
       ],
     });
 
-    const content = response.content[0].text;
+    const content = response.content?.[0]?.text || "생성 실패";
 
     res.setHeader("Content-Type", "text/html");
     res.status(200).send(content);
