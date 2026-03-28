@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import EbookPage from "@/components/EbookPage";
+import EbookPage from "../components/EbookPage";
 
 const CHAPTERS = [
   { number: 1, title: "연애 타로의 골든 타임" },
