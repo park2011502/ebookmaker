@@ -230,5 +230,3 @@ export async function POST(req: NextRequest) {
     );
   }
 }
-
-export { CHAPTERS };
