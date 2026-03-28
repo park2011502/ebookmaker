@@ -258,7 +258,7 @@ export async function POST(req: NextRequest) {
 
     const msg = await client.messages.create({
       model: "claude-opus-4-5",
-      max_tokens: 3000,
+      max_tokens: 6000,
       messages: [{ role: "user", content: buildSectionPrompt(chapter.number, chapter.title, section, sectionIndex) }],
     });
     const raw = msg.content[0];
