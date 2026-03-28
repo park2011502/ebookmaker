@@ -3,11 +3,11 @@
 import { useState } from "react";
 
 const CHAPTERS = [
-  { number: 1, title: "연애 타로의 골든 타임", sections: 3 },
-  { number: 2, title: "상황별 실전 리딩: 썸에서 연애까지", sections: 4 },
-  { number: 3, title: "키워드로 보는 타로 연애 궁합", sections: 3 },
-  { number: 4, title: "연애 고민 해결사: 스프레드 비법", sections: 3 },
-  { number: 5, title: "타로가 알려주는 '나를 사랑하는 법'", sections: 3 },
+  { number: 1, title: "연애 타로의 골든 타임", sections: 4 },
+  { number: 2, title: "상황별 실전 리딩: 썸에서 연애까지", sections: 5 },
+  { number: 3, title: "키워드로 보는 타로 연애 궁합", sections: 4 },
+  { number: 4, title: "연애 고민 해결사: 스프레드 비법", sections: 4 },
+  { number: 5, title: "타로가 알려주는 '나를 사랑하는 법'", sections: 4 },
 ];
 
 type Status = "idle" | "generating" | "done" | "error";
