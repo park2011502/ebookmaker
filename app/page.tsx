@@ -2,12 +2,14 @@
 
 import { useState } from "react";
 
+// 챕터 1: 메이저(11) + 마이너(14) = 25페이지 섹션
+// 챕터 2~5: 각 섹션 4페이지씩
 const CHAPTERS = [
-  { number: 1, title: "연애 타로의 시작 — 기초와 질문법", sections: 4 },
-  { number: 2, title: "메이저 아르카나 22장 — 연애 해석 완전 정복", sections: 4 },
-  { number: 3, title: "마이너 아르카나 — 원소별 연애 에너지", sections: 4 },
-  { number: 4, title: "카드 위치와 조합 해석 — 순서가 바뀌면 의미도 바뀐다", sections: 4 },
-  { number: 5, title: "연애 상담 실전 완전 정복", sections: 5 },
+  { index: 0, number: 1, title: "타로카드 78장 연애 해석 레퍼런스", sections: 25 },
+  { index: 1, number: 2, title: "연애 타로의 시작 — 질문법과 리딩 준비", sections: 4 },
+  { index: 2, number: 3, title: "카드 위치와 조합 해석", sections: 4 },
+  { index: 3, number: 4, title: "연애 상담 실전 완전 정복 I", sections: 4 },
+  { index: 4, number: 5, title: "연애 상담 실전 완전 정복 II", sections: 5 },
 ];
 
 type Status = "idle" | "generating" | "done" | "error";
@@ -34,13 +36,13 @@ export default function Home() {
     for (let ci = 0; ci < CHAPTERS.length; ci++) {
       const ch = CHAPTERS[ci];
 
-      // 챕터 오프너
+      // 오프너 (-1)
       setCurrentStep(`챕터 ${ch.number} 오프너 생성 중...`);
       try {
         const res = await fetch("/api/generate", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ chapterIndex: ci, sectionIndex: -1, startPage: nextPage }),
+          body: JSON.stringify({ chapterIndex: ch.index, sectionIndex: -1, startPage: nextPage }),
         });
         if (!res.ok) throw new Error((await res.json()).error);
         const data = await res.json();
@@ -57,12 +59,19 @@ export default function Home() {
 
       // 섹션 하나씩
       for (let si = 0; si < ch.sections; si++) {
-        setCurrentStep(`챕터 ${ch.number} · 섹션 ${si + 1}/${ch.sections} 생성 중...`);
+        if (ch.index === 0) {
+          const isMinor = si >= 11;
+          const label = isMinor ? `마이너 ${si - 10}/${14}` : `메이저 ${si + 1}/11`;
+          setCurrentStep(`챕터 1 · ${label} 생성 중...`);
+        } else {
+          setCurrentStep(`챕터 ${ch.number} · 섹션 ${si + 1}/${ch.sections} 생성 중...`);
+        }
+
         try {
           const res = await fetch("/api/generate", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ chapterIndex: ci, sectionIndex: si, startPage: nextPage }),
+            body: JSON.stringify({ chapterIndex: ch.index, sectionIndex: si, startPage: nextPage }),
           });
           if (!res.ok) throw new Error((await res.json()).error);
           const data = await res.json();
@@ -88,7 +97,7 @@ export default function Home() {
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>연애 프리패스 — 타로로 꿰뚫는 상대의 속마음</title>
+<title>3초만에 외워지는 마법의 연애백서</title>
 <style>${allCss}</style>
 </head>
 <body>
@@ -99,7 +108,7 @@ ${allHtml}
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "연애프리패스_타로전자책.html";
+    a.download = "마법의연애백서_타로전자책.html";
     a.click();
     URL.revokeObjectURL(url);
   }
@@ -113,8 +122,8 @@ ${allHtml}
       <div id="ctrl">
         <div className="inner">
           <div className="hd">
-            <h1>타로 연애 전자책 생성기</h1>
-            <p>버튼 하나로 타로 연애 상담사 완전 정복 전자책을 자동 생성합니다</p>
+            <h1>마법의 연애백서 생성기</h1>
+            <p>타로카드 78장 연애 해석 + 실전 상담 완전 정복</p>
           </div>
 
           <div className="toc">
