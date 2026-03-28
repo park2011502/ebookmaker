@@ -169,7 +169,7 @@ function buildSectionHtml(chapterNum: number, chapterTitle: string, sec: Section
 
   html += `<div class="pg">${hd}<div class="pg-body">${badge}<div class="cmp-row"><div class="bad-box"><div class="box-title">✕ 이렇게 하면 안 돼요</div><ul>${sec.badExamples.map(e=>`<li>${e}</li>`).join("")}</ul></div><div class="good-box"><div class="box-title">✓ 이렇게 해보세요</div><ul>${sec.goodExamples.map(e=>`<li>${e}</li>`).join("")}</ul></div></div>${sec.subheadings[2]?`<div class="sub-h">${sec.subheadings[2].title}</div><p class="body-p">${sec.subheadings[2].body}</p>`:""}<div class="quote-box"><p>"${sec.quote}"</p></div><div class="tip-box"><div class="tip-title">Golden Tip</div><p>${sec.tip}</p></div></div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
 
-  html += `<div class="pg"><div class="pg-hd"><span>연애 프리패스 | 타로로 꿰뚫는 상대의 속마음</span><span>CH ${chapterNum} · 실전 정리</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 정리</span></div><div class="sec-title">${sec.title}</div><div class="sec-rule"></div><table class="data-table"><thead><tr>${sec.tableHeaders.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${sec.tableRows.map(r=>`<tr><td>${r.col1}</td><td>${r.col2}</td><td>${r.col3}</td></tr>`).join("")}</tbody></table><div class="div-rule"></div><div class="sub-h">🌹 이 섹션의 핵심</div><p class="body-p">${(sec.subheadings[0]?.body??'').substring(0,280)}...</p><div class="quote-box"><p>"${sec.quote}"</p></div></div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
+  html += `<div class="pg"><div class="pg-hd"><span>연애 프리패스 | 타로로 꿰뚫는 상대의 속마음</span><span>CH ${chapterNum} · 실전 정리</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 정리</span></div><div class="sec-title">${sec.title}</div><div class="sec-rule"></div><table class="data-table"><thead><tr>${sec.tableHeaders.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${sec.tableRows.map(r=>`<tr><td>${r.col1}</td><td>${r.col2}</td><td>${r.col3}</td></tr>`).join("")}</tbody></table><div class="div-rule"></div><div class="sub-h">🌹 이 섹션의 핵심</div><p class="body-p">${sec.subheadings[0]?.body??''}</p><div class="quote-box"><p>"${sec.quote}"</p></div></div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
 
   return html;
 }
@@ -197,12 +197,12 @@ function buildSectionPrompt(chapterNum: number, chapterTitle: string, section: {
   "title": "${section.title}",
   "cardFile": "${section.card}",
   "cardName": "${section.cardName}",
-  "cardDesc": "카드와 섹션 주제 연결 4~5문장. 구체적 상징 해석 포함.",
+  "cardDesc": "카드와 섹션 주제 연결 2~3문장. 핵심 상징만 간결하게.",
   "cardTagline": "카드 핵심 메시지 한 줄",
   "subheadings": [
-    {"title": "🔮 소제목1", "body": "5~6문장. 구체적 상황, 실제 대화 예시, 공감 케이스 포함."},
-    {"title": "💡 소제목2", "body": "5~6문장. 실전 적용법과 구체적 사례."},
-    {"title": "💬 소제목3", "body": "5~6문장. 바로 실천할 수 있는 내용."}
+    {"title": "🔮 소제목1", "body": "3~4문장. 구체적 상황과 공감 예시. 반드시 완전한 문장으로 끝낼 것."},
+    {"title": "💡 소제목2", "body": "3~4문장. 실전 적용법 포함. 반드시 완전한 문장으로 끝낼 것."},
+    {"title": "💬 소제목3", "body": "3~4문장. 실천 가능한 내용. 반드시 완전한 문장으로 끝낼 것."}
   ],
   "badExamples": ["나쁜 예시1 — 상황과 이유","나쁜 예시2 — 상황과 이유","나쁜 예시3 — 상황과 이유","나쁜 예시4 — 상황과 이유"],
   "goodExamples": ["좋은 예시1 — 상황과 이유","좋은 예시2 — 상황과 이유","좋은 예시3 — 상황과 이유","좋은 예시4 — 상황과 이유"],
@@ -215,7 +215,7 @@ function buildSectionPrompt(chapterNum: number, chapterTitle: string, section: {
     {"col1":"상황5","col2":"해석5","col3":"조언5"}
   ],
   "quote": "독자 마음에 남는 핵심 한 문장",
-  "tip": "골든 팁 4~5문장. 구체적이고 실용적으로.",
+  "tip": "2~3문장. 실천 가능한 조언. 반드시 완전한 문장으로 끝낼 것.",
   "summary": ["핵심 요약1","핵심 요약2","핵심 요약3","핵심 요약4"]
 }
 JSON만 출력.`;
