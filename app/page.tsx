@@ -3,11 +3,11 @@
 import { useState } from "react";
 
 const CHAPTERS = [
-  { number: 1, title: "연애 타로의 골든 타임", sections: 4 },
-  { number: 2, title: "상황별 실전 리딩: 썸에서 연애까지", sections: 5 },
-  { number: 3, title: "키워드로 보는 타로 연애 궁합", sections: 4 },
-  { number: 4, title: "연애 고민 해결사: 스프레드 비법", sections: 4 },
-  { number: 5, title: "타로가 알려주는 '나를 사랑하는 법'", sections: 4 },
+  { number: 1, title: "연애 타로의 시작 — 기초와 질문법", sections: 4 },
+  { number: 2, title: "메이저 아르카나 22장 — 연애 해석 완전 정복", sections: 4 },
+  { number: 3, title: "마이너 아르카나 — 원소별 연애 에너지", sections: 4 },
+  { number: 4, title: "카드 위치와 조합 해석 — 순서가 바뀌면 의미도 바뀐다", sections: 4 },
+  { number: 5, title: "연애 상담 실전 완전 정복", sections: 5 },
 ];
 
 type Status = "idle" | "generating" | "done" | "error";
@@ -34,7 +34,7 @@ export default function Home() {
     for (let ci = 0; ci < CHAPTERS.length; ci++) {
       const ch = CHAPTERS[ci];
 
-      // 1. 챕터 오프너
+      // 챕터 오프너
       setCurrentStep(`챕터 ${ch.number} 오프너 생성 중...`);
       try {
         const res = await fetch("/api/generate", {
@@ -50,12 +50,12 @@ export default function Home() {
         setAllHtml(combinedHtml);
         setAllCss(combinedCss);
       } catch (e: unknown) {
-        setErrorMsg(`챕터 ${ch.number} 오프너 오류: ${e instanceof Error ? e.message : "알 수 없는 오류"}`);
+        setErrorMsg(`챕터 ${ch.number} 오프너 오류: ${e instanceof Error ? e.message : "오류"}`);
         setStatus("error");
         return;
       }
 
-      // 2. 섹션 하나씩
+      // 섹션 하나씩
       for (let si = 0; si < ch.sections; si++) {
         setCurrentStep(`챕터 ${ch.number} · 섹션 ${si + 1}/${ch.sections} 생성 중...`);
         try {
@@ -70,7 +70,7 @@ export default function Home() {
           nextPage = data.nextStartPage;
           setAllHtml(combinedHtml);
         } catch (e: unknown) {
-          setErrorMsg(`챕터 ${ch.number} 섹션 ${si + 1} 오류: ${e instanceof Error ? e.message : "알 수 없는 오류"}`);
+          setErrorMsg(`챕터 ${ch.number} 섹션 ${si + 1} 오류: ${e instanceof Error ? e.message : "오류"}`);
           setStatus("error");
           return;
         }
@@ -80,7 +80,7 @@ export default function Home() {
     }
 
     setStatus("done");
-    setCurrentStep("완성!");
+    setCurrentStep("완성! 🎉");
   }
 
   function handleDownload() {
@@ -113,8 +113,8 @@ ${allHtml}
       <div id="ctrl">
         <div className="inner">
           <div className="hd">
-            <h1>타로 전자책 생성기</h1>
-            <p>버튼 하나로 80페이지 전자책을 자동 생성합니다</p>
+            <h1>타로 연애 전자책 생성기</h1>
+            <p>버튼 하나로 타로 연애 상담사 완전 정복 전자책을 자동 생성합니다</p>
           </div>
 
           <div className="toc">
@@ -151,9 +151,7 @@ ${allHtml}
                status === "done" ? "다시 생성" : "전자책 생성 시작"}
             </button>
             {status === "done" && (
-              <button className="btn-dl" onClick={handleDownload}>
-                HTML 다운로드
-              </button>
+              <button className="btn-dl" onClick={handleDownload}>HTML 다운로드</button>
             )}
           </div>
 
