@@ -567,48 +567,10 @@ JSON만 출력.`;
   }
 
   // ── 챕터 2: 기본 ──
-  return `타로 전자책 전문 작가입니다. JSON으로만 작성하세요. JSON 외 텍스트 절대 금지. 모든 문장 마침표로 끝낼 것. 연애 리딩 전문가 구어체.
+  return `JSON만 출력. 다른 텍스트 금지. 모든 값 반드시 마침표로 끝낼 것.
+섹션: ${section.title} / 카드: ${section.cardName}
 
-챕터 ${chapterNum}: ${chapterTitle} / 섹션 ${si+1}: ${section.title}
-카드: ${section.cardName} / 추가: ${extraList}
-
-{
-  "title": "${section.title}",
-  "cardFile": "${section.card}",
-  "cardName": "${section.cardName}",
-  "cardDesc": "이 카드의 연애 핵심 의미 2~3문장. 정방향과 역방향 포함. 반드시 마침표로 끝낼 것.",
-  "cardTagline": "이 카드가 연애에서 주는 핵심 메시지 한 줄.",
-  "subheadings": [
-    {"title": "🔮 소제목1", "body": "2문장. 마침표로 끝낼 것."},
-    {"title": "💡 소제목2", "body": "2문장. 마침표로 끝낼 것."},
-    {"title": "💬 소제목3", "body": "2문장. 마침표로 끝낼 것."}
-  ],
-  "extraCards": [${section.extraCards.map(c=>`{"file":"${c.file}","name":"${c.name}","interp":"한 줄 의미."}`).join(",")}],
-  "badExamples": ["잘못된 예시1.","잘못된 예시2.","잘못된 예시3.","잘못된 예시4."],
-  "goodExamples": ["올바른 예시1.","올바른 예시2.","올바른 예시3.","올바른 예시4."],
-  "tableHeaders": ["상황","정방향","역방향"],
-  "tableRows": [
-    {"col1":"상황1","col2":"정방향1","col3":"역방향1"},
-    {"col1":"상황2","col2":"정방향2","col3":"역방향2"},
-    {"col1":"상황3","col2":"정방향3","col3":"역방향3"},
-    {"col1":"상황4","col2":"정방향4","col3":"역방향4"},
-    {"col1":"상황5","col2":"정방향5","col3":"역방향5"}
-  ],
-  "quote": "핵심 한 문장.",
-  "tip": "팁 2문장. 마침표로 끝낼 것.",
-  "cases": [
-    {"question": "질문1.", "answer": "답변1. 마침표로 끝낼 것."},
-    {"question": "질문2.", "answer": "답변2. 마침표로 끝낼 것."},
-    {"question": "질문3.", "answer": "답변3. 마침표로 끝낼 것."}
-  ],
-  "quiz": {
-    "question": "🎯 퀴즈: 카드 배열 3장 제시.",
-    "hint": "💭 힌트: 한 줄.",
-    "answer": "✅ 해설: 2문장. 마침표로 끝낼 것."
-  },
-  "summary": ["요약1.","요약2.","요약3.","요약4."]
-}
-JSON만 출력.`;
+{"title":"${section.title}","cardFile":"${section.card}","cardName":"${section.cardName}","cardDesc":"한 문장. 마침표로 끝낼 것.","cardTagline":"한 줄.","subheadings":[{"title":"🔮 소제목1","body":"한 문장."},{"title":"💡 소제목2","body":"한 문장."},{"title":"💬 소제목3","body":"한 문장."}],"extraCards":[${section.extraCards.map(c=>`{"file":"${c.file}","name":"${c.name}","interp":"한 줄."}`).join(",")}],"badExamples":["예시1.","예시2.","예시3.","예시4."],"goodExamples":["예시1.","예시2.","예시3.","예시4."],"tableHeaders":["상황","정방향","역방향"],"tableRows":[{"col1":"상황1","col2":"정방향1","col3":"역방향1"},{"col1":"상황2","col2":"정방향2","col3":"역방향2"},{"col1":"상황3","col2":"정방향3","col3":"역방향3"},{"col1":"상황4","col2":"정방향4","col3":"역방향4"},{"col1":"상황5","col2":"정방향5","col3":"역방향5"}],"quote":"한 문장.","tip":"한 문장.","cases":[{"question":"질문1.","answer":"답변1."},{"question":"질문2.","answer":"답변2."},{"question":"질문3.","answer":"답변3."}],"quiz":{"question":"🎯 퀴즈: 카드 3장 배열 제시.","hint":"힌트 한 줄.","answer":"해설 한 문장."},"summary":["요약1.","요약2.","요약3.","요약4."]}`;
 }
 
 // ── API Route ──────────────────────────────────────────
