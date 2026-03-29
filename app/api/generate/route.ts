@@ -87,14 +87,14 @@ const CSS = `@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{--cream:#FAF6F1;--cream-mid:#F2EAE0;--rose:#B5566B;--rose-mid:#C97788;--rose-lt:#E8C2CC;--rose-pale:#F8EFF2;--rose-faint:#FDF7F8;--gold:#9C7040;--gold-lt:#EDE0C8;--dark:#1A110C;--mid:#5A3828;--light:#9A7060;--divider:#DDD0C4;--serif:'Noto Serif KR',Georgia,serif;--sans:'Noto Sans KR',sans-serif;--display:'Playfair Display','Noto Serif KR',serif;}
 html,body{background:#C0B4A8;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
-.pg{width:148mm;height:210mm;background:var(--cream);margin:0 auto 16px;display:flex;flex-direction:column;font-family:var(--serif);page-break-after:always;page-break-inside:avoid;overflow:hidden;}
+.pg{width:148mm;min-height:210mm;background:var(--cream);margin:0 auto 16px;display:flex;flex-direction:column;font-family:var(--serif);page-break-after:always;page-break-inside:avoid;}
 @media print{html,body{background:none;}.pg{margin:0;box-shadow:none;}@page{size:A5;margin:0;}}
 .pg-hd{display:flex;justify-content:space-between;align-items:center;padding:8px 18px 7px;border-bottom:0.5px solid var(--divider);flex-shrink:0;}
 .pg-hd span{font-family:var(--sans);font-size:6.5px;color:var(--light);letter-spacing:0.3px;}
 .pg-ft{display:flex;justify-content:space-between;align-items:center;padding:7px 18px 8px;border-top:0.5px solid var(--divider);flex-shrink:0;margin-top:auto;}
 .pg-ft .pn{font-family:var(--display);font-size:10px;color:var(--light);}
 .pg-ft .pt{font-family:var(--sans);font-size:6.5px;color:var(--rose-lt);letter-spacing:1.5px;text-transform:uppercase;}
-.pg-body{padding:10px 18px 8px;display:flex;flex-direction:column;gap:0;flex:1;overflow:hidden;}
+.pg-body{padding:10px 18px 8px;display:flex;flex-direction:column;gap:0;flex:1;}
 
 /* 카드 레퍼런스 — 메이저 (상하 반반) */
 .card-ref-half{flex:1;display:flex;flex-direction:row;gap:12px;padding:8px 0;border-bottom:0.5px solid var(--divider);}
@@ -425,10 +425,14 @@ function buildSectionHtml(
   html += `<div class="pg"><div class="pg-hd"><span>마법의 연애백서 | 타로로 꿰뚫는 상대의 속마음</span><span>CH 0${chapterNum} · 실전 정리</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 정리</span></div><div class="sec-title">${sec.title}</div><div class="sec-rule"></div><table class="data-table"><thead><tr>${sec.tableHeaders.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${sec.tableRows.map(r=>`<tr><td>${r.col1}</td><td>${r.col2}</td><td>${r.col3}</td></tr>`).join("")}</tbody></table><div class="div-rule"></div><div class="sub-h">🌹 핵심 정리</div><p class="body-p">${sec.subheadings[0]?.body??""}</p><div class="tip-box"><div class="tip-title">Golden Tip</div><p>${sec.tip}</p></div></div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
 
   const secWithQuiz = sec as SectionData & { quiz?: { question: string; hint: string; answer: string } };
-  const quizHtml = secWithQuiz.quiz
-    ? `<div class="quiz-box"><div class="quiz-title">🎯 실전 퀴즈</div><p class="quiz-q">${secWithQuiz.quiz.question}</p><p class="quiz-hint">${secWithQuiz.quiz.hint}</p><div class="quiz-answer-box"><div class="quiz-answer-label">정답 해설 ▼</div><p class="quiz-answer">${secWithQuiz.quiz.answer}</p></div></div>`
-    : "";
-  html += `<div class="pg"><div class="pg-hd"><span>마법의 연애백서 | 타로로 꿰뚫는 상대의 속마음</span><span>CH 0${chapterNum} · 실전 상담 &amp; 퀴즈</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 상담 케이스</span></div><div class="sec-title">${sec.title}</div><div class="sec-rule"></div>${sec.cases.slice(0,2).map((c,i)=>`<div class="case-box"><div class="case-title">💬 케이스 ${i+1}</div><p class="case-q">Q. ${c.question}</p><p class="case-a">A. ${c.answer}</p></div>`).join("")}${quizHtml}</div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
+
+  // 페이지 4: 케이스 1~2 (퀴즈 없이 케이스만)
+  html += `<div class="pg"><div class="pg-hd"><span>마법의 연애백서 | 타로로 꿰뚫는 상대의 속마음</span><span>CH 0${chapterNum} · 실전 상담 케이스</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 상담 케이스</span></div><div class="sec-title">${sec.title}</div><div class="sec-rule"></div>${sec.cases.map((c,i)=>`<div class="case-box"><div class="case-title">💬 케이스 ${i+1}</div><p class="case-q">Q. ${c.question}</p><p class="case-a">A. ${c.answer}</p></div>`).join("")}<div class="tip-box" style="margin-top:auto;"><div class="tip-title">이 섹션 핵심 요약</div><p>${sec.summary.join(" ")}</p></div></div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
+
+  // 페이지 5: 퀴즈 (별도 페이지)
+  if (secWithQuiz.quiz) {
+    html += `<div class="pg"><div class="pg-hd"><span>마법의 연애백서 | 타로로 꿰뚫는 상대의 속마음</span><span>CH 0${chapterNum} · 실전 퀴즈</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 퀴즈</span></div><div class="sec-title">${sec.title}</div><div class="sec-rule"></div><div class="quiz-box"><div class="quiz-title">🎯 실전 퀴즈</div><p class="quiz-q">${secWithQuiz.quiz.question}</p><p class="quiz-hint">${secWithQuiz.quiz.hint}</p></div><div class="quiz-box" style="background:var(--gold-lt);border-color:#D0B080;margin-top:12px;"><div class="quiz-title" style="color:var(--gold);">✅ 정답 해설</div><p class="quiz-answer">${secWithQuiz.quiz.answer}</p></div><div class="quote-box" style="margin-top:auto;"><p>"카드는 답을 가르쳐주는 것이 아니라, 스스로 답을 찾을 용기를 준다."</p></div></div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
+  }
 
   return html;
 }
@@ -724,7 +728,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       html: sectionHtml + summaryHtml,
       chapterIndex, sectionIndex, isLastSection,
-      nextStartPage: startPage + 4 + (isLastSection ? 1 : 0),
+      nextStartPage: startPage + 5 + (isLastSection ? 1 : 0),
     });
 
   } catch (error) {
