@@ -87,7 +87,7 @@ const CSS = `@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{--cream:#FAF6F1;--cream-mid:#F2EAE0;--rose:#B5566B;--rose-mid:#C97788;--rose-lt:#E8C2CC;--rose-pale:#F8EFF2;--rose-faint:#FDF7F8;--gold:#9C7040;--gold-lt:#EDE0C8;--dark:#1A110C;--mid:#5A3828;--light:#9A7060;--divider:#DDD0C4;--serif:'Noto Serif KR',Georgia,serif;--sans:'Noto Sans KR',sans-serif;--display:'Playfair Display','Noto Serif KR',serif;}
 html,body{background:#C0B4A8;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
-.pg{width:148mm;min-height:210mm;background:var(--cream);margin:0 auto 16px;display:flex;flex-direction:column;font-family:var(--serif);page-break-after:always;}
+.pg{width:148mm;min-height:210mm;background:var(--cream);margin:0 auto 16px;display:flex;flex-direction:column;font-family:var(--serif);page-break-after:always;page-break-inside:avoid;}
 @media print{html,body{background:none;}.pg{margin:0;box-shadow:none;}@page{size:A5;margin:0;}}
 .pg-hd{display:flex;justify-content:space-between;align-items:center;padding:8px 18px 7px;border-bottom:0.5px solid var(--divider);flex-shrink:0;}
 .pg-hd span{font-family:var(--sans);font-size:6.5px;color:var(--light);letter-spacing:0.3px;}
