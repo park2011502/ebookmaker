@@ -424,20 +424,12 @@ function buildSectionHtml(
 
   html += `<div class="pg"><div class="pg-hd"><span>마법의 연애백서 | 타로로 꿰뚫는 상대의 속마음</span><span>CH 0${chapterNum} · 실전 정리</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 정리</span></div><div class="sec-title">${sec.title}</div><div class="sec-rule"></div><table class="data-table"><thead><tr>${sec.tableHeaders.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${sec.tableRows.map(r=>`<tr><td>${r.col1}</td><td>${r.col2}</td><td>${r.col3}</td></tr>`).join("")}</tbody></table><div class="div-rule"></div><div class="sub-h">🌹 핵심 정리</div><p class="body-p">${sec.subheadings[0]?.body??""}</p><div class="tip-box"><div class="tip-title">Golden Tip</div><p>${sec.tip}</p></div></div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
 
-  const secWithQuiz = sec as SectionData & { quiz?: { question: string; hint: string; answer: string } };
-
-  // 페이지 4: 케이스 1~2 (퀴즈 없이 케이스만)
   // 페이지 4: 케이스 1개 + 퀴즈
   const secWithQuiz = sec as SectionData & { quiz?: { question: string; hint: string; answer: string } };
   const quizHtml = secWithQuiz.quiz
     ? `<div class="quiz-box"><div class="quiz-title">🎯 실전 퀴즈</div><p class="quiz-q">${secWithQuiz.quiz.question}</p><p class="quiz-hint">${secWithQuiz.quiz.hint}</p><div class="quiz-answer-box"><div class="quiz-answer-label">정답 해설 ▼</div><p class="quiz-answer">${secWithQuiz.quiz.answer}</p></div></div>`
     : "";
   html += `<div class="pg"><div class="pg-hd"><span>마법의 연애백서 | 타로로 꿰뚫는 상대의 속마음</span><span>CH 0${chapterNum} · 실전 상담 케이스</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 상담 케이스</span></div><div class="sec-title">${sec.title}</div><div class="sec-rule"></div>${sec.cases.slice(0,1).map((c,i)=>`<div class="case-box"><div class="case-title">💬 케이스 ${i+1}</div><p class="case-q">Q. ${c.question}</p><p class="case-a">A. ${c.answer}</p></div>`).join("")}${quizHtml}</div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
-
-  // 페이지 5: 퀴즈 (별도 페이지)
-  if (secWithQuiz.quiz) {
-    html += `<div class="pg"><div class="pg-hd"><span>마법의 연애백서 | 타로로 꿰뚫는 상대의 속마음</span><span>CH 0${chapterNum} · 실전 퀴즈</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 퀴즈</span></div><div class="sec-title">${sec.title}</div><div class="sec-rule"></div><div class="quiz-box"><div class="quiz-title">🎯 실전 퀴즈</div><p class="quiz-q">${secWithQuiz.quiz.question}</p><p class="quiz-hint">${secWithQuiz.quiz.hint}</p></div><div class="quiz-box" style="background:var(--gold-lt);border-color:#D0B080;margin-top:12px;"><div class="quiz-title" style="color:var(--gold);">✅ 정답 해설</div><p class="quiz-answer">${secWithQuiz.quiz.answer}</p></div><div class="quote-box" style="margin-top:auto;"><p>"카드는 답을 가르쳐주는 것이 아니라, 스스로 답을 찾을 용기를 준다."</p></div></div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
-  }
 
   return html;
 }
