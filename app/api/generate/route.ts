@@ -419,29 +419,27 @@ function buildSectionHtml(
   let html = "";
   let pg = startPage;
   const hd = `<div class="pg-hd"><span>마법의 연애백서 | 타로로 꿰뚫는 상대의 속마음</span><span>CH 0${chapterNum} · ${chapterTitle}</span></div>`;
-  const badge = `<div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">Section</span></div><div class="sec-title">${sec.title}</div><div class="sec-rule"></div>`;
+  const safeTitle = sec.title.replace(/&/g, "&amp;");
+  const badge = `<div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">Section</span></div><div class="sec-title">${safeTitle}</div><div class="sec-rule"></div>`;
 
   // 페이지 1: 카드 + 소제목 1~2 (각 3문장)
-  html += `<div class="pg">${hd}<div class="pg-body">${badge}<div class="card-callout"><div class="cc-img"><img src="${BASE_URL}/cards/${sec.cardFile}" alt="${sec.cardName}"><div class="cc-name">${sec.cardName}</div></div><div class="cc-body"><h4>💡 ${sec.cardName}이 말하는 것</h4><p>${trimSentences(sec.cardDesc,3)}</p><span class="cc-tagline">${sec.cardTagline}</span></div></div>${sec.subheadings.slice(0,2).map(sh=>`<div class="sub-h">${sh.title}</div><p class="body-p">${trimSentences(sh.body,3)}</p>`).join("")}</div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
+  html += `<div class="pg">${hd}<div class="pg-body">${badge}<div class="card-callout"><div class="cc-img"><img src="${BASE_URL}/cards/${sec.cardFile}" alt="${sec.cardName}"><div class="cc-name">${sec.cardName}</div></div><div class="cc-body"><h4>💡 ${sec.cardName.replace(/\.+$/, "")}이 말하는 것</h4><p>${trimSentences(sec.cardDesc,4)}</p><span class="cc-tagline">${sec.cardTagline}</span></div></div>${sec.subheadings.slice(0,2).map(sh=>`<div class="sub-h">${sh.title}</div><p class="body-p">${trimSentences(sh.body,4)}</p>`).join("")}</div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
 
   // 페이지 2: 추가카드 + 비교박스 + 소제목3 + 인용
   const multiCardsHtml = extraCardFiles.length > 0
     ? `<div class="multi-cards">${extraCardFiles.map(c=>{const interp=sec.extraCards?.find(e=>e.file===c.file);return `<div class="mini-card"><img src="${BASE_URL}/cards/${c.file}" alt="${c.name}"><div class="mn">${c.name}</div><div class="mi">${trimSentences(interp?.interp??"",1)}</div></div>`;}).join("")}</div>`
     : "";
-  html += `<div class="pg">${hd}<div class="pg-body">${badge}${multiCardsHtml}<div class="cmp-row"><div class="bad-box"><div class="box-title">✕ 이렇게 하면 안 돼요</div><ul>${sec.badExamples.slice(0,4).map(e=>`<li>${e}</li>`).join("")}</ul></div><div class="good-box"><div class="box-title">✓ 이렇게 해보세요</div><ul>${sec.goodExamples.slice(0,4).map(e=>`<li>${e}</li>`).join("")}</ul></div></div>${sec.subheadings[2]?`<div class="sub-h">${sec.subheadings[2].title}</div><p class="body-p">${trimSentences(sec.subheadings[2].body,3)}</p>`:""}<div class="quote-box"><p>"${sec.quote}"</p></div></div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
+  html += `<div class="pg">${hd}<div class="pg-body">${badge}${multiCardsHtml}<div class="cmp-row"><div class="bad-box"><div class="box-title">✕ 이렇게 하면 안 돼요</div><ul>${sec.badExamples.slice(0,3).map(e=>`<li>${e}</li>`).join("")}</ul></div><div class="good-box"><div class="box-title">✓ 이렇게 해보세요</div><ul>${sec.goodExamples.slice(0,3).map(e=>`<li>${e}</li>`).join("")}</ul></div></div>${sec.subheadings[2]?`<div class="sub-h">${sec.subheadings[2].title}</div><p class="body-p">${trimSentences(sec.subheadings[2].body,3)}</p>`:""}<div class="quote-box"><p>"${sec.quote}"</p></div></div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
 
   // 페이지 3: 표 + 핵심정리 + 팁
-  html += `<div class="pg"><div class="pg-hd"><span>마법의 연애백서 | 타로로 꿰뚫는 상대의 속마음</span><span>CH 0${chapterNum} · 실전 정리</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 정리</span></div><div class="sec-title">${sec.title}</div><div class="sec-rule"></div><table class="data-table"><thead><tr>${sec.tableHeaders.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${sec.tableRows.map(r=>`<tr><td>${r.col1}</td><td>${r.col2}</td><td>${r.col3}</td></tr>`).join("")}</tbody></table><div class="div-rule"></div><div class="sub-h">🌹 핵심 정리</div><p class="body-p">${trimSentences(sec.subheadings[0]?.body??"",3)}</p><div class="tip-box"><div class="tip-title">Golden Tip</div><p>${trimSentences(sec.tip,2)}</p></div></div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
+  html += `<div class="pg"><div class="pg-hd"><span>마법의 연애백서 | 타로로 꿰뚫는 상대의 속마음</span><span>CH 0${chapterNum} · 실전 정리</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 정리</span></div><div class="sec-title">${safeTitle}</div><div class="sec-rule"></div><table class="data-table"><thead><tr>${sec.tableHeaders.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${sec.tableRows.map(r=>`<tr><td>${r.col1}</td><td>${r.col2}</td><td>${r.col3}</td></tr>`).join("")}</tbody></table><div class="div-rule"></div><div class="sub-h">🌹 핵심 정리</div><p class="body-p">${trimSentences(sec.subheadings[0]?.body??"",3)}</p><div class="tip-box"><div class="tip-title">Golden Tip</div><p>${trimSentences(sec.tip,2)}</p></div></div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
 
-  // 페이지 4: 케이스 1개
-  const case1 = sec.cases[0];
-  html += `<div class="pg"><div class="pg-hd"><span>마법의 연애백서 | 타로로 꿰뚫는 상대의 속마음</span><span>CH 0${chapterNum} · 실전 상담 케이스</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 상담 케이스</span></div><div class="sec-title">${sec.title}</div><div class="sec-rule"></div>${case1?`<div class="case-box"><div class="case-title">💬 실전 케이스</div><p class="case-q">Q. ${case1.question}</p><p class="case-a">A. ${trimSentences(case1.answer,4)}</p></div>`:""}<div class="tip-box" style="margin-top:auto;"><div class="tip-title">이 섹션 핵심 요약</div><p>${sec.summary.slice(0,3).join(" ")}</p></div></div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
-
-  // 페이지 5: 퀴즈 (별도 페이지)
+  // 페이지 4: 케이스 2개 + 핵심요약 + 퀴즈 (한 페이지)
   const secWithQuiz = sec as SectionData & { quiz?: { question: string; hint: string; answer: string } };
-  if (secWithQuiz.quiz) {
-    html += `<div class="pg"><div class="pg-hd"><span>마법의 연애백서 | 타로로 꿰뚫는 상대의 속마음</span><span>CH 0${chapterNum} · 실전 퀴즈</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 퀴즈</span></div><div class="sec-title">${sec.title}</div><div class="sec-rule"></div><div class="quiz-box"><div class="quiz-title">🎯 실전 퀴즈</div><p class="quiz-q">${secWithQuiz.quiz.question}</p><p class="quiz-hint">${secWithQuiz.quiz.hint}</p><div class="quiz-answer-box"><div class="quiz-answer-label">정답 해설 ▼</div><p class="quiz-answer">${trimSentences(secWithQuiz.quiz.answer,4)}</p></div></div></div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
-  }
+  const quizBlock = secWithQuiz.quiz
+    ? `<div class="quiz-box"><div class="quiz-title">🎯 실전 퀴즈</div><p class="quiz-q">${secWithQuiz.quiz.question}</p><p class="quiz-hint">${secWithQuiz.quiz.hint}</p><div class="quiz-answer-box"><div class="quiz-answer-label">정답 해설 ▼</div><p class="quiz-answer">${trimSentences(secWithQuiz.quiz.answer,3)}</p></div></div>`
+    : "";
+  html += `<div class="pg"><div class="pg-hd"><span>마법의 연애백서 | 타로로 꿰뚫는 상대의 속마음</span><span>CH 0${chapterNum} · 실전 상담 케이스</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 상담 케이스</span></div><div class="sec-title">${safeTitle}</div><div class="sec-rule"></div>${sec.cases.slice(0,2).map((c,i)=>`<div class="case-box"><div class="case-title">💬 케이스 ${i+1}</div><p class="case-q">Q. ${c.question}</p><p class="case-a">A. ${trimSentences(c.answer,3)}</p></div>`).join("")}<div class="tip-box"><div class="tip-title">✦ 이 섹션 핵심 요약</div><p>${sec.summary.slice(0,2).join(" ")}</p></div>${quizBlock}</div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
 
   return html;
 }
@@ -579,7 +577,7 @@ JSON만 출력.`;
   return `JSON만 출력. 다른 텍스트 금지. 모든 값 반드시 마침표로 끝낼 것.
 섹션: ${section.title} / 카드: ${section.cardName}
 
-{"title":"${section.title}","cardFile":"${section.card}","cardName":"${section.cardName}","cardDesc":"한 문장. 마침표로 끝낼 것.","cardTagline":"한 줄.","subheadings":[{"title":"🔮 소제목1","body":"한 문장."},{"title":"💡 소제목2","body":"한 문장."},{"title":"💬 소제목3","body":"한 문장."}],"extraCards":[${section.extraCards.map(c=>`{"file":"${c.file}","name":"${c.name}","interp":"한 줄."}`).join(",")}],"badExamples":["예시1.","예시2.","예시3.","예시4."],"goodExamples":["예시1.","예시2.","예시3.","예시4."],"tableHeaders":["상황","정방향","역방향"],"tableRows":[{"col1":"상황1","col2":"정방향1","col3":"역방향1"},{"col1":"상황2","col2":"정방향2","col3":"역방향2"},{"col1":"상황3","col2":"정방향3","col3":"역방향3"},{"col1":"상황4","col2":"정방향4","col3":"역방향4"},{"col1":"상황5","col2":"정방향5","col3":"역방향5"}],"quote":"한 문장.","tip":"한 문장.","cases":[{"question":"질문1.","answer":"답변1."},{"question":"질문2.","answer":"답변2."},{"question":"질문3.","answer":"답변3."}],"quiz":{"question":"🎯 퀴즈: 카드 3장 배열 제시.","hint":"힌트 한 줄.","answer":"해설 한 문장."},"summary":["요약1.","요약2.","요약3.","요약4."]}`;
+{"title":"${section.title}","cardFile":"${section.card}","cardName":"${section.cardName}","cardDesc":"4~5문장. 이 카드의 연애 핵심 의미. 정방향과 역방향 포함. 반드시 마침표로 끝낼 것.","cardTagline":"한 줄.","subheadings":[{"title":"🔮 소제목1","body":"4~5문장. 핵심 내용을 구체적으로. 반드시 마침표로 끝낼 것."},{"title":"💡 소제목2","body":"4~5문장. 실전 적용법 포함. 반드시 마침표로 끝낼 것."},{"title":"💬 소제목3","body":"4~5문장. 예시와 함께 설명. 반드시 마침표로 끝낼 것."}],"extraCards":[${section.extraCards.map(c=>`{"file":"${c.file}","name":"${c.name}","interp":"한 줄."}`).join(",")}],"badExamples":["예시1.","예시2.","예시3.","예시4."],"goodExamples":["예시1.","예시2.","예시3.","예시4."],"tableHeaders":["상황","정방향","역방향"],"tableRows":[{"col1":"상황1","col2":"정방향1","col3":"역방향1"},{"col1":"상황2","col2":"정방향2","col3":"역방향2"},{"col1":"상황3","col2":"정방향3","col3":"역방향3"},{"col1":"상황4","col2":"정방향4","col3":"역방향4"},{"col1":"상황5","col2":"정방향5","col3":"역방향5"}],"quote":"한 문장.","tip":"한 문장.","cases":[{"question":"질문1.","answer":"답변1."},{"question":"질문2.","answer":"답변2."},{"question":"질문3.","answer":"답변3."}],"quiz":{"question":"🎯 퀴즈: 카드 3장 배열 제시.","hint":"힌트 한 줄.","answer":"해설 한 문장."},"summary":["요약1.","요약2.","요약3.","요약4."]}`;
 }
 
 // ── API Route ──────────────────────────────────────────
@@ -679,7 +677,7 @@ export async function POST(req: NextRequest) {
 
     const msg = await client.messages.create({
       model: "claude-opus-4-5",
-      max_tokens: chapter.number === 2 ? 2000 : 16000,
+      max_tokens: chapter.number === 2 ? 4000 : 16000,
       messages: [{ role: "user", content: buildSectionPrompt(chapter.number, chapter.title, section, sectionIndex) }],
     });
     const raw = msg.content[0];
@@ -699,7 +697,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       html: sectionHtml + summaryHtml,
       chapterIndex, sectionIndex, isLastSection,
-      nextStartPage: startPage + 5 + (isLastSection ? 1 : 0),
+      nextStartPage: startPage + 4 + (isLastSection ? 1 : 0),
     });
 
   } catch (error) {
