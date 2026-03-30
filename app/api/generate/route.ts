@@ -94,7 +94,7 @@ html,body{background:#C0B4A8;-webkit-print-color-adjust:exact;print-color-adjust
 .pg-ft{display:flex;justify-content:space-between;align-items:center;padding:7px 18px 8px;border-top:0.5px solid var(--divider);flex-shrink:0;margin-top:auto;}
 .pg-ft .pn{font-family:var(--display);font-size:10px;color:var(--light);}
 .pg-ft .pt{font-family:var(--sans);font-size:6.5px;color:var(--rose-lt);letter-spacing:1.5px;text-transform:uppercase;}
-.pg-body{padding:10px 17px 40px;display:flex;flex-direction:column;gap:0;flex:1;}
+.pg-body{padding:10px 17px 20px;display:flex;flex-direction:column;gap:0;flex:1;}
 
 /* 카드 레퍼런스 — 메이저 (상하 반반) */
 .card-ref-half{flex:1;display:flex;flex-direction:row;gap:12px;padding:8px 0;border-bottom:0.5px solid var(--divider);}
@@ -403,6 +403,13 @@ interface SectionData {
   summary: string[];
 }
 
+// 마침표 기준으로 N문장만 추출
+function trimSentences(text: string, max: number): string {
+  if (!text) return "";
+  const sentences = text.match(/[^。.!?！？]+[。.!?！？]+/g) || [text];
+  return sentences.slice(0, max).join("").trim();
+}
+
 function buildSectionHtml(
   chapterNum: number, chapterTitle: string,
   sec: SectionData,
@@ -414,22 +421,27 @@ function buildSectionHtml(
   const hd = `<div class="pg-hd"><span>마법의 연애백서 | 타로로 꿰뚫는 상대의 속마음</span><span>CH 0${chapterNum} · ${chapterTitle}</span></div>`;
   const badge = `<div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">Section</span></div><div class="sec-title">${sec.title}</div><div class="sec-rule"></div>`;
 
-  html += `<div class="pg">${hd}<div class="pg-body">${badge}<div class="card-callout"><div class="cc-img"><img src="${BASE_URL}/cards/${sec.cardFile}" alt="${sec.cardName}"><div class="cc-name">${sec.cardName}</div></div><div class="cc-body"><h4>💡 ${sec.cardName}이 말하는 것</h4><p>${sec.cardDesc}</p><span class="cc-tagline">${sec.cardTagline}</span></div></div>${sec.subheadings.slice(0,2).map(sh=>`<div class="sub-h">${sh.title}</div><p class="body-p">${sh.body}</p>`).join("")}</div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
+  // 페이지 1: 카드 + 소제목 1~2 (각 3문장)
+  html += `<div class="pg">${hd}<div class="pg-body">${badge}<div class="card-callout"><div class="cc-img"><img src="${BASE_URL}/cards/${sec.cardFile}" alt="${sec.cardName}"><div class="cc-name">${sec.cardName}</div></div><div class="cc-body"><h4>💡 ${sec.cardName}이 말하는 것</h4><p>${trimSentences(sec.cardDesc,3)}</p><span class="cc-tagline">${sec.cardTagline}</span></div></div>${sec.subheadings.slice(0,2).map(sh=>`<div class="sub-h">${sh.title}</div><p class="body-p">${trimSentences(sh.body,3)}</p>`).join("")}</div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
 
+  // 페이지 2: 추가카드 + 비교박스 + 소제목3 + 인용
   const multiCardsHtml = extraCardFiles.length > 0
-    ? `<div class="multi-cards">${extraCardFiles.map(c=>{const interp=sec.extraCards?.find(e=>e.file===c.file);return `<div class="mini-card"><img src="${BASE_URL}/cards/${c.file}" alt="${c.name}"><div class="mn">${c.name}</div><div class="mi">${interp?.interp??""}</div></div>`;}).join("")}</div>`
+    ? `<div class="multi-cards">${extraCardFiles.map(c=>{const interp=sec.extraCards?.find(e=>e.file===c.file);return `<div class="mini-card"><img src="${BASE_URL}/cards/${c.file}" alt="${c.name}"><div class="mn">${c.name}</div><div class="mi">${trimSentences(interp?.interp??"",1)}</div></div>`;}).join("")}</div>`
     : "";
+  html += `<div class="pg">${hd}<div class="pg-body">${badge}${multiCardsHtml}<div class="cmp-row"><div class="bad-box"><div class="box-title">✕ 이렇게 하면 안 돼요</div><ul>${sec.badExamples.slice(0,4).map(e=>`<li>${e}</li>`).join("")}</ul></div><div class="good-box"><div class="box-title">✓ 이렇게 해보세요</div><ul>${sec.goodExamples.slice(0,4).map(e=>`<li>${e}</li>`).join("")}</ul></div></div>${sec.subheadings[2]?`<div class="sub-h">${sec.subheadings[2].title}</div><p class="body-p">${trimSentences(sec.subheadings[2].body,3)}</p>`:""}<div class="quote-box"><p>"${sec.quote}"</p></div></div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
 
-  html += `<div class="pg">${hd}<div class="pg-body">${badge}${multiCardsHtml}<div class="cmp-row"><div class="bad-box"><div class="box-title">✕ 이렇게 하면 안 돼요</div><ul>${sec.badExamples.map(e=>`<li>${e}</li>`).join("")}</ul></div><div class="good-box"><div class="box-title">✓ 이렇게 해보세요</div><ul>${sec.goodExamples.map(e=>`<li>${e}</li>`).join("")}</ul></div></div>${sec.subheadings[2]?`<div class="sub-h">${sec.subheadings[2].title}</div><p class="body-p">${sec.subheadings[2].body}</p>`:""}<div class="quote-box"><p>"${sec.quote}"</p></div></div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
+  // 페이지 3: 표 + 핵심정리 + 팁
+  html += `<div class="pg"><div class="pg-hd"><span>마법의 연애백서 | 타로로 꿰뚫는 상대의 속마음</span><span>CH 0${chapterNum} · 실전 정리</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 정리</span></div><div class="sec-title">${sec.title}</div><div class="sec-rule"></div><table class="data-table"><thead><tr>${sec.tableHeaders.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${sec.tableRows.map(r=>`<tr><td>${r.col1}</td><td>${r.col2}</td><td>${r.col3}</td></tr>`).join("")}</tbody></table><div class="div-rule"></div><div class="sub-h">🌹 핵심 정리</div><p class="body-p">${trimSentences(sec.subheadings[0]?.body??"",3)}</p><div class="tip-box"><div class="tip-title">Golden Tip</div><p>${trimSentences(sec.tip,2)}</p></div></div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
 
-  html += `<div class="pg"><div class="pg-hd"><span>마법의 연애백서 | 타로로 꿰뚫는 상대의 속마음</span><span>CH 0${chapterNum} · 실전 정리</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 정리</span></div><div class="sec-title">${sec.title}</div><div class="sec-rule"></div><table class="data-table"><thead><tr>${sec.tableHeaders.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${sec.tableRows.map(r=>`<tr><td>${r.col1}</td><td>${r.col2}</td><td>${r.col3}</td></tr>`).join("")}</tbody></table><div class="div-rule"></div><div class="sub-h">🌹 핵심 정리</div><p class="body-p">${sec.subheadings[0]?.body??""}</p><div class="tip-box"><div class="tip-title">Golden Tip</div><p>${sec.tip}</p></div></div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
+  // 페이지 4: 케이스 1개
+  const case1 = sec.cases[0];
+  html += `<div class="pg"><div class="pg-hd"><span>마법의 연애백서 | 타로로 꿰뚫는 상대의 속마음</span><span>CH 0${chapterNum} · 실전 상담 케이스</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 상담 케이스</span></div><div class="sec-title">${sec.title}</div><div class="sec-rule"></div>${case1?`<div class="case-box"><div class="case-title">💬 실전 케이스</div><p class="case-q">Q. ${case1.question}</p><p class="case-a">A. ${trimSentences(case1.answer,4)}</p></div>`:""}<div class="tip-box" style="margin-top:auto;"><div class="tip-title">이 섹션 핵심 요약</div><p>${sec.summary.slice(0,3).join(" ")}</p></div></div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
 
-  // 페이지 4: 케이스 1개 + 퀴즈
+  // 페이지 5: 퀴즈 (별도 페이지)
   const secWithQuiz = sec as SectionData & { quiz?: { question: string; hint: string; answer: string } };
-  const quizHtml = secWithQuiz.quiz
-    ? `<div class="quiz-box"><div class="quiz-title">🎯 실전 퀴즈</div><p class="quiz-q">${secWithQuiz.quiz.question}</p><p class="quiz-hint">${secWithQuiz.quiz.hint}</p><div class="quiz-answer-box"><div class="quiz-answer-label">정답 해설 ▼</div><p class="quiz-answer">${secWithQuiz.quiz.answer}</p></div></div>`
-    : "";
-  html += `<div class="pg"><div class="pg-hd"><span>마법의 연애백서 | 타로로 꿰뚫는 상대의 속마음</span><span>CH 0${chapterNum} · 실전 상담 케이스</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 상담 케이스</span></div><div class="sec-title">${sec.title}</div><div class="sec-rule"></div>${sec.cases.slice(0,1).map((c,i)=>`<div class="case-box"><div class="case-title">💬 케이스 ${i+1}</div><p class="case-q">Q. ${c.question}</p><p class="case-a">A. ${c.answer}</p></div>`).join("")}${quizHtml}</div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
+  if (secWithQuiz.quiz) {
+    html += `<div class="pg"><div class="pg-hd"><span>마법의 연애백서 | 타로로 꿰뚫는 상대의 속마음</span><span>CH 0${chapterNum} · 실전 퀴즈</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 퀴즈</span></div><div class="sec-title">${sec.title}</div><div class="sec-rule"></div><div class="quiz-box"><div class="quiz-title">🎯 실전 퀴즈</div><p class="quiz-q">${secWithQuiz.quiz.question}</p><p class="quiz-hint">${secWithQuiz.quiz.hint}</p><div class="quiz-answer-box"><div class="quiz-answer-label">정답 해설 ▼</div><p class="quiz-answer">${trimSentences(secWithQuiz.quiz.answer,4)}</p></div></div></div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
+  }
 
   return html;
 }
@@ -471,12 +483,12 @@ function buildSectionPrompt(
   "title": "${section.title}",
   "cardFile": "${section.card}",
   "cardName": "${section.cardName}",
-  "cardDesc": "이 섹션 주제(${section.title})를 한눈에 설명하는 2문장. 특정 카드가 아닌 위치/조합 원칙 전체를 소개. 반드시 마침표로 끝낼 것.",
+  "cardDesc": "이 섹션 주제(${section.title})를 한눈에 설명하는 4~5문장. 특정 카드가 아닌 위치/조합 원칙 전체를 소개. 반드시 마침표로 끝낼 것.",
   "cardTagline": "이 섹션의 핵심 원칙 한 줄.",
   "subheadings": [
-    {"title": "🔮 소제목1 — 원칙 설명", "body": "3문장. 어떤 카드든 통용되는 위치/조합 해석 원칙. 메이저가 오면/마이너가 오면/역방향이면 등 원칙 중심. 반드시 마침표로 끝낼 것."},
-    {"title": "💡 소제목2 — 원소별 적용", "body": "3문장. 컵/완드/검/펜타클이 각 위치에 오면 어떻게 해석하는지 원소별 원칙. 반드시 마침표로 끝낼 것."},
-    {"title": "💬 소제목3 — 실전 적용법", "body": "3문장. 실제 리딩에서 이 원칙을 어떻게 적용하는지. 반드시 마침표로 끝낼 것."}
+    {"title": "🔮 소제목1 — 원칙 설명", "body": "5~6문장. 어떤 카드든 통용되는 위치/조합 해석 원칙. 메이저가 오면/마이너가 오면/역방향이면 등 원칙 중심. 반드시 마침표로 끝낼 것."},
+    {"title": "💡 소제목2 — 원소별 적용", "body": "5~6문장. 컵/완드/검/펜타클이 각 위치에 오면 어떻게 해석하는지 원소별 원칙. 반드시 마침표로 끝낼 것."},
+    {"title": "💬 소제목3 — 실전 적용법", "body": "5~6문장. 실제 리딩에서 이 원칙을 어떻게 적용하는지. 반드시 마침표로 끝낼 것."}
   ],
   "extraCards": [
     ${section.extraCards.map(c=>`{"file": "${c.file}", "name": "${c.name}", "interp": "이 카드가 해당 위치/조합에서 갖는 의미 한 줄."}`).join(",\n    ")}
@@ -492,7 +504,7 @@ function buildSectionPrompt(
     {"col1":"위치/상황5","col2":"해석 원칙5","col3":"주의점5"}
   ],
   "quote": "위치/조합 해석의 핵심 원칙 한 문장.",
-  "tip": "2문장. 어떤 카드가 나와도 바로 적용할 수 있는 팁. 반드시 마침표로 끝낼 것.",
+  "tip": "4~5문장. 어떤 카드가 나와도 바로 적용할 수 있는 구체적인 팁. 반드시 마침표로 끝낼 것.",
   "cases": [
     {"question": "실제 배열 예시 질문 1 (카드 3장 이상 포함).", "answer": "위치/조합 원칙을 적용한 해석. 반드시 마침표로 끝낼 것."},
     {"question": "실제 배열 예시 질문 2 (카드 3장 이상 포함).", "answer": "위치/조합 원칙을 적용한 해석. 반드시 마침표로 끝낼 것."},
@@ -526,12 +538,12 @@ JSON만 출력.`;
   "title": "${section.title}",
   "cardFile": "${section.card}",
   "cardName": "${section.cardName}",
-  "cardDesc": "이 상황(${section.title})의 타로 리딩 포인트 2문장. 어떤 카드가 나올 수 있는지 전반적으로 소개. 반드시 마침표로 끝낼 것.",
+  "cardDesc": "이 상황(${section.title})의 타로 리딩 포인트 4~5문장. 어떤 카드가 나올 수 있는지 전반적으로 소개. 반드시 마침표로 끝낼 것.",
   "cardTagline": "이 상황 리딩의 핵심 포인트 한 줄.",
   "subheadings": [
-    {"title": "🔮 소제목1 — 이 상황에서 자주 나오는 카드들", "body": "3문장. 이 상황에서 긍정적 신호 카드들(예: 컵2, 바보, 태양 등)과 주의 신호 카드들(예: 달, 검3, 탑 등)을 구체적으로 나열하며 해석. 반드시 마침표로 끝낼 것."},
-    {"title": "💡 소제목2 — 카드별 해석 옵션", "body": "3문장. 같은 질문이라도 어떤 카드가 나오느냐에 따라 해석이 어떻게 달라지는지. 최소 3가지 카드 옵션 포함. 반드시 마침표로 끝낼 것."},
-    {"title": "💬 소제목3 — 배열 위치별 적용", "body": "3문장. 이 상황에서 3카드 또는 5카드 배열을 쓸 때 각 위치별로 어떻게 읽는지. 반드시 마침표로 끝낼 것."}
+    {"title": "🔮 소제목1 — 이 상황에서 자주 나오는 카드들", "body": "5~6문장. 이 상황에서 긍정적 신호 카드들(예: 컵2, 바보, 태양 등)과 주의 신호 카드들(예: 달, 검3, 탑 등)을 구체적으로 나열하며 해석. 반드시 마침표로 끝낼 것."},
+    {"title": "💡 소제목2 — 카드별 해석 옵션", "body": "5~6문장. 같은 질문이라도 어떤 카드가 나오느냐에 따라 해석이 어떻게 달라지는지. 최소 3가지 카드 옵션 포함. 반드시 마침표로 끝낼 것."},
+    {"title": "💬 소제목3 — 배열 위치별 적용", "body": "5~6문장. 이 상황에서 3카드 또는 5카드 배열을 쓸 때 각 위치별로 어떻게 읽는지. 반드시 마침표로 끝낼 것."}
   ],
   "extraCards": [
     ${section.extraCards.map(c=>`{"file": "${c.file}", "name": "${c.name}", "interp": "이 상황(${section.title})에서 이 카드가 나오면 어떤 의미인지 한 줄."}`).join(",\n    ")}
@@ -547,16 +559,16 @@ JSON만 출력.`;
     {"col1":"카드5 (구체적 카드명)","col2":"이 상황에서 의미5","col3":"조언5"}
   ],
   "quote": "이 상황 리딩의 핵심 메시지 한 문장.",
-  "tip": "2문장. 이 상황 리딩에서 바로 쓸 수 있는 팁. 반드시 마침표로 끝낼 것.",
+  "tip": "4~5문장. 이 상황 리딩에서 바로 쓸 수 있는 구체적인 팁. 반드시 마침표로 끝낼 것.",
   "cases": [
-    {"question": "이 상황 실제 상담 질문 1 (구체적 상황 포함).", "answer": "여러 카드 옵션을 포함한 답변. 반드시 마침표로 끝낼 것."},
-    {"question": "이 상황 실제 상담 질문 2 (구체적 상황 포함).", "answer": "여러 카드 옵션을 포함한 답변. 반드시 마침표로 끝낼 것."},
-    {"question": "이 상황 실제 상담 질문 3 (구체적 상황 포함).", "answer": "여러 카드 옵션을 포함한 답변. 반드시 마침표로 끝낼 것."}
+    {"question": "이 상황 실제 상담 질문 1 (구체적 상황 포함).", "answer": "4~5문장. 카드 3가지 이상 옵션을 포함한 풍부한 답변. 반드시 마침표로 끝낼 것."},
+    {"question": "이 상황 실제 상담 질문 2 (구체적 상황 포함).", "answer": "4~5문장. 카드 3가지 이상 옵션을 포함한 풍부한 답변. 반드시 마침표로 끝낼 것."},
+    {"question": "이 상황 실제 상담 질문 3 (구체적 상황 포함).", "answer": "4~5문장. 카드 3가지 이상 옵션을 포함한 풍부한 답변. 반드시 마침표로 끝낼 것."}
   ],
   "quiz": {
     "question": "🎯 실전 퀴즈: 아래 배열이 나왔을 때 어떻게 해석할까요? 1번 위치: [카드명] / 2번 위치: [카드명] / 3번 위치: [카드명] — 구체적인 카드 3~5장으로 실제 배열을 만들어 제시할 것.",
     "hint": "💭 힌트: 챕터 1의 카드 의미 + 챕터 3의 위치 원칙을 함께 적용해보세요.",
-    "answer": "✅ 정답 해설: 각 위치의 카드 의미를 조합한 완전한 해석. 독자가 납득할 수 있게 단계별로 설명. 반드시 마침표로 끝낼 것."
+    "answer": "✅ 정답 해설: 각 위치의 카드 의미를 단계별로 풍부하게 설명하는 5~6문장. 반드시 마침표로 끝낼 것."
   },
   "summary": ["핵심 요약1.","핵심 요약2.","핵심 요약3.","핵심 요약4."]
 }
