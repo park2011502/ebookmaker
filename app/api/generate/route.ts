@@ -58,7 +58,7 @@ const CHAPTERS = [
       { title: "3카드 스프레드 — 과거/현재/미래 완전 해석", card: "RWS_Tarot_18_Moon.jpg", cardName: "달 (The Moon)", extraCards: [{ file: "TheLovers.jpg", name: "연인" }, { file: "RWS_Tarot_19_Sun.jpg", name: "태양" }] },
       { title: "5카드 스프레드 — 상황/감정/장애/조언/결과", card: "RWS_Tarot_10_Wheel_of_Fortune.jpg", cardName: "운명의 수레바퀴", extraCards: [{ file: "Cups07.jpg", name: "컵 7" }, { file: "RWS_Tarot_17_Star.jpg", name: "별" }] },
       { title: "카드 조합 해석 — 함께 나오면 달라지는 의미", card: "Cups02.jpg", cardName: "컵 2 (Two of Cups)", extraCards: [{ file: "RWS_Tarot_16_Tower.jpg", name: "탑" }, { file: "RWS_Tarot_15_Devil.jpg", name: "악마" }] },
-      { title: "위치별 강화 & 약화 — 같은 카드도 자리가 다르면", card: "RWS_Tarot_02_High_Priestess.jpg", cardName: "여사제", extraCards: [{ file: "RWS_Tarot_20_Judgement.jpg", name: "심판" }] },
+      { title: "위치별 강화 및 약화 — 같은 카드도 자리가 다르면", card: "RWS_Tarot_02_High_Priestess.jpg", cardName: "여사제", extraCards: [{ file: "RWS_Tarot_20_Judgement.jpg", name: "심판" }] },
     ],
   },
   {
@@ -74,7 +74,7 @@ const CHAPTERS = [
     number: 5, title: "연애 상담 실전 완전 정복 II — 이별·재회·삼각관계",
     sections: [
       { title: "이별 후 재회 — 재회 가능성과 감정 정리", card: "Cups08.jpg", cardName: "컵 8 (Eight of Cups)", extraCards: [{ file: "Cups06.jpg", name: "컵 6" }, { file: "RWS_Tarot_20_Judgement.jpg", name: "심판" }] },
-      { title: "삼각관계 & 복잡한 상황 리딩", card: "Swords03.jpg", cardName: "검 3 (Three of Swords)", extraCards: [{ file: "RWS_Tarot_15_Devil.jpg", name: "악마" }, { file: "RWS_Tarot_11_Justice.jpg", name: "정의" }] },
+      { title: "삼각관계 및 복잡한 상황 리딩", card: "Swords03.jpg", cardName: "검 3 (Three of Swords)", extraCards: [{ file: "RWS_Tarot_15_Devil.jpg", name: "악마" }, { file: "RWS_Tarot_11_Justice.jpg", name: "정의" }] },
       { title: "연락이 올까? 상대의 행동을 예측하는 법", card: "Wands08.jpg", cardName: "완드 8 (Eight of Wands)", extraCards: [{ file: "Cups01.jpg", name: "컵 에이스" }, { file: "RWS_Tarot_18_Moon.jpg", name: "달" }] },
       { title: "나를 위한 리딩 — 자존감과 다음 인연 준비", card: "RWS_Tarot_19_Sun.jpg", cardName: "태양 (The Sun)", extraCards: [{ file: "RWS_Tarot_21_World.jpg", name: "세계" }, { file: "Cups01.jpg", name: "컵 에이스" }] },
       { title: "연애 고민별 추천 스프레드 완전 가이드", card: "RWS_Tarot_03_Empress.jpg", cardName: "여황제 (The Empress)", extraCards: [{ file: "RWS_Tarot_02_High_Priestess.jpg", name: "여사제" }, { file: "RWS_Tarot_17_Star.jpg", name: "별" }] },
@@ -423,7 +423,7 @@ function buildSectionHtml(
   const badge = `<div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">Section</span></div><div class="sec-title">${safeTitle}</div><div class="sec-rule"></div>`;
 
   // 페이지 1: 카드 + 소제목 1~2 (각 3문장)
-  html += `<div class="pg">${hd}<div class="pg-body">${badge}<div class="card-callout"><div class="cc-img"><img src="${BASE_URL}/cards/${sec.cardFile}" alt="${sec.cardName}"><div class="cc-name">${sec.cardName}</div></div><div class="cc-body"><h4>💡 ${sec.cardName.replace(/\.+$/, "")}이 말하는 것</h4><p>${trimSentences(sec.cardDesc,4)}</p><span class="cc-tagline">${sec.cardTagline}</span></div></div>${sec.subheadings.slice(0,2).map(sh=>`<div class="sub-h">${sh.title}</div><p class="body-p">${trimSentences(sh.body,4)}</p>`).join("")}</div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
+  html += `<div class="pg">${hd}<div class="pg-body">${badge}<div class="card-callout"><div class="cc-img"><img src="${BASE_URL}/cards/${sec.cardFile}" alt="${sec.cardName}"><div class="cc-name">${sec.cardName}</div></div><div class="cc-body"><h4>💡 ${sec.cardName.replace(/\.+$/, "")}이 말하는 것</h4><p>${trimSentences(sec.cardDesc,4)}</p><span class="cc-tagline">${sec.cardTagline}</span></div></div>${sec.subheadings.slice(0,2).map(sh=>`<div class="sub-h">${sh.title}</div><p class="body-p">${trimSentences(sh.body,2)}</p>`).join("")}</div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
 
   // 페이지 2: 추가카드 + 비교박스 + 소제목3 + 인용
   const multiCardsHtml = extraCardFiles.length > 0
@@ -432,7 +432,7 @@ function buildSectionHtml(
   html += `<div class="pg">${hd}<div class="pg-body">${badge}${multiCardsHtml}<div class="cmp-row"><div class="bad-box"><div class="box-title">✕ 이렇게 하면 안 돼요</div><ul>${sec.badExamples.slice(0,3).map(e=>`<li>${e}</li>`).join("")}</ul></div><div class="good-box"><div class="box-title">✓ 이렇게 해보세요</div><ul>${sec.goodExamples.slice(0,3).map(e=>`<li>${e}</li>`).join("")}</ul></div></div>${sec.subheadings[2]?`<div class="sub-h">${sec.subheadings[2].title}</div><p class="body-p">${trimSentences(sec.subheadings[2].body,3)}</p>`:""}<div class="quote-box"><p>"${sec.quote}"</p></div></div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
 
   // 페이지 3: 표 + 핵심정리 + 팁
-  html += `<div class="pg"><div class="pg-hd"><span>마법의 연애백서 | 타로로 꿰뚫는 상대의 속마음</span><span>CH 0${chapterNum} · 실전 정리</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 정리</span></div><div class="sec-title">${safeTitle}</div><div class="sec-rule"></div><table class="data-table"><thead><tr>${sec.tableHeaders.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${sec.tableRows.map(r=>`<tr><td>${r.col1}</td><td>${r.col2}</td><td>${r.col3}</td></tr>`).join("")}</tbody></table><div class="div-rule"></div><div class="sub-h">🌹 핵심 정리</div><p class="body-p">${trimSentences(sec.subheadings[0]?.body??"",3)}</p><div class="tip-box"><div class="tip-title">Golden Tip</div><p>${trimSentences(sec.tip,2)}</p></div></div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
+  html += `<div class="pg"><div class="pg-hd"><span>마법의 연애백서 | 타로로 꿰뚫는 상대의 속마음</span><span>CH 0${chapterNum} · 실전 정리</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 정리</span></div><div class="sec-title">${safeTitle}</div><div class="sec-rule"></div><table class="data-table"><thead><tr>${sec.tableHeaders.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${sec.tableRows.map(r=>`<tr><td>${r.col1}</td><td>${r.col2}</td><td>${r.col3}</td></tr>`).join("")}</tbody></table><div class="div-rule"></div><div class="sub-h">🌹 핵심 정리</div><p class="body-p">${trimSentences(sec.subheadings[0]?.body??"",2)}</p><div class="tip-box"><div class="tip-title">Golden Tip</div><p>${trimSentences(sec.tip,2)}</p></div></div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
 
   // 페이지 4: 케이스 2개 + 핵심요약 + 퀴즈 (한 페이지)
   const secWithQuiz = sec as SectionData & { quiz?: { question: string; hint: string; answer: string } };
