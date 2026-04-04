@@ -227,10 +227,10 @@ html,body{background:#B8A870;-webkit-print-color-adjust:exact;print-color-adjust
 function buildCoverHtml(): string {
   const cards = [
     { file: "Pents01.jpg", label: "Ace of Pentacles", w: 48, mb: 12, op: 0.82 },
-    { file: "Pents09.jpg", label: "Nine of Pentacles", w: 62, mb: 5, op: 1 },
-    { file: "Pents10.jpg", label: "Ten of Pentacles", w: 80, mb: 0, op: 1 },
+    { file: "RWS_Tarot_10_Wheel_of_Fortune.jpg", label: "Wheel of Fortune", w: 62, mb: 5, op: 1 },
+    { file: "RWS_Tarot_21_World.jpg", label: "The World", w: 80, mb: 0, op: 1 },
     { file: "RWS_Tarot_19_Sun.jpg", label: "The Sun", w: 62, mb: 5, op: 1 },
-    { file: "RWS_Tarot_21_World.jpg", label: "The World", w: 48, mb: 12, op: 0.82 },
+    { file: "Pents09.jpg", label: "Nine of Pentacles", w: 48, mb: 12, op: 0.82 },
   ];
   return `<div class="pg"><div class="cover-top"><div class="cover-vol-en">Volume 01 · Tarot Money Guide</div><div class="cover-vol-kr">제 1 권</div></div><div class="cover-cards-row">${cards.map(c=>`<div class="c-card"><img src="${BASE_URL}/cards/${c.file}" style="width:${c.w}px;margin-bottom:${c.mb}px;opacity:${c.op};" alt="${c.label}"><div class="clbl">${c.label}</div></div>`).join("")}</div><div class="cover-title-block"><div class="cover-main-title">3초만에 외워지는<br>마법의 금전백서</div><div class="cover-rule"></div><div class="cover-subtitle">타로로 꿰뚫는 나의 금전 흐름</div><div class="cover-tagline">제1권 · 이 책 한 권으로 타로 금전 상담사 완전 정복</div></div><div class="cover-dots"><span></span><span class="on"></span><span></span></div><div class="cover-learn"><h4>이 책에서 배울 것들</h4><ul><li>메이저 아르카나 22장 + 마이너 56장 금전 해석 완전 정복</li><li>정방향·역방향·위치별 해석이 한눈에</li><li>3카드·5카드 스프레드 실전 적용법</li><li>수입·지출·투자·사업·부동산 실전 케이스</li><li>이 책 한 권으로 타로 금전 상담사 데뷔 가능</li></ul></div><div class="cover-toc">${["카드레퍼런스","질문법·준비","위치·조합","실전Ⅰ","실전Ⅱ"].map((t,i)=>`<div class="toc-cell"><div class="tn">0${i+1}</div><div class="tl">${t}</div></div>`).join("")}</div><div class="cover-bottom"><div class="cover-bottom-l">Tarot Money Guide</div><div class="cover-bottom-r">제1권 · 타로 금전 상담사 완전 정복</div></div></div>`;
 }
