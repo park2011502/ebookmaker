@@ -198,9 +198,9 @@ html,body{background:#B8A870;-webkit-print-color-adjust:exact;print-color-adjust
 .cover-top{background:var(--gold);padding:24px 0 18px;text-align:center;flex-shrink:0;}
 .cover-vol-en{font-family:var(--display);font-size:8px;letter-spacing:5px;color:rgba(255,255,255,0.6);text-transform:uppercase;margin-bottom:5px;}
 .cover-vol-kr{font-family:var(--serif);font-size:20px;font-weight:600;color:#fff;letter-spacing:5px;}
-.cover-cards-row{display:flex;justify-content:center;align-items:center;gap:10px;padding:26px 24px 18px;flex-shrink:0;}
+.cover-cards-row{display:flex;justify-content:center;align-items:flex-end;gap:10px;padding:26px 24px 18px;flex-shrink:0;}
 .c-card{display:flex;flex-direction:column;align-items:center;gap:5px;}
-.c-card img{border-radius:4px;box-shadow:4px 8px 22px rgba(60,40,0,0.28);display:block;width:55px;height:95px;object-fit:cover;}
+.c-card img{border-radius:4px;box-shadow:4px 8px 22px rgba(60,40,0,0.28);display:block;}
 .c-card .clbl{font-family:var(--display);font-size:6.5px;color:var(--light);letter-spacing:1px;text-transform:uppercase;}
 .cover-title-block{text-align:center;padding:4px 36px 14px;flex-shrink:0;}
 .cover-main-title{font-family:var(--display);font-size:30px;font-weight:700;color:var(--dark);letter-spacing:-1px;line-height:1.1;margin-bottom:10px;}
@@ -226,11 +226,11 @@ html,body{background:#B8A870;-webkit-print-color-adjust:exact;print-color-adjust
 // ── 표지 ──────────────────────────────────────────────
 function buildCoverHtml(): string {
   const cards = [
-    { file: "Pents01.jpg", label: "Ace of Pentacles", w: 55, mb: 0, op: 0.82 },
-    { file: "RWS_Tarot_10_Wheel_of_Fortune.jpg", label: "Wheel of Fortune", w: 55, mb: 0, op: 1 },
-    { file: "RWS_Tarot_21_World.jpg", label: "The World", w: 55, mb: 0, op: 1 },
-    { file: "RWS_Tarot_19_Sun.jpg", label: "The Sun", w: 55, mb: 0, op: 1 },
-    { file: "Pents09.jpg", label: "Nine of Pentacles", w: 55, mb: 0, op: 0.82 },
+    { file: "Pents01.jpg", label: "Ace of Pentacles", w: 48, mb: 12, op: 0.82 },
+    { file: "RWS_Tarot_10_Wheel_of_Fortune.jpg", label: "Wheel of Fortune", w: 62, mb: 5, op: 1 },
+    { file: "RWS_Tarot_21_World.jpg", label: "The World", w: 80, mb: 0, op: 1 },
+    { file: "RWS_Tarot_19_Sun.jpg", label: "The Sun", w: 62, mb: 5, op: 1 },
+    { file: "Pents09.jpg", label: "Nine of Pentacles", w: 48, mb: 12, op: 0.82 },
   ];
   return `<div class="pg"><div class="cover-top"><div class="cover-vol-en">Volume 01 · Tarot Money Guide</div><div class="cover-vol-kr">제 1 권</div></div><div class="cover-cards-row">${cards.map(c=>`<div class="c-card"><img src="${BASE_URL}/cards/${c.file}" style="width:${c.w}px;margin-bottom:${c.mb}px;opacity:${c.op};" alt="${c.label}"><div class="clbl">${c.label}</div></div>`).join("")}</div><div class="cover-title-block"><div class="cover-main-title">3초만에 외워지는<br>마법의 금전백서</div><div class="cover-rule"></div><div class="cover-subtitle">타로로 꿰뚫는 나의 금전 흐름</div><div class="cover-tagline">제1권 · 이 책 한 권으로 타로 금전 상담사 완전 정복</div></div><div class="cover-dots"><span></span><span class="on"></span><span></span></div><div class="cover-learn"><h4>이 책에서 배울 것들</h4><ul><li>메이저 아르카나 22장 + 마이너 56장 금전 해석 완전 정복</li><li>정방향·역방향·위치별 해석이 한눈에</li><li>3카드·5카드 스프레드 실전 적용법</li><li>수입·지출·투자·사업·부동산 실전 케이스</li><li>이 책 한 권으로 타로 금전 상담사 데뷔 가능</li></ul></div><div class="cover-toc">${["카드레퍼런스","질문법·준비","위치·조합","실전Ⅰ","실전Ⅱ"].map((t,i)=>`<div class="toc-cell"><div class="tn">0${i+1}</div><div class="tl">${t}</div></div>`).join("")}</div><div class="cover-bottom"><div class="cover-bottom-l">Tarot Money Guide</div><div class="cover-bottom-r">제1권 · 타로 금전 상담사 완전 정복</div></div></div>`;
 }
