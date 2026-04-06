@@ -140,8 +140,8 @@ html,body{background:#3D1F6B;-webkit-print-color-adjust:exact;print-color-adjust
 .op-desc{font-family:var(--serif);font-size:11px;color:var(--mid);font-style:italic;line-height:1.9;margin-bottom:18px;word-break:keep-all;}
 .op-sections{width:100%;background:var(--purple-faint);border:1px solid var(--purple-lt);border-radius:5px;padding:13px 18px;text-align:left;}
 .op-sections h4{font-family:var(--sans);font-size:8px;font-weight:600;color:var(--purple);letter-spacing:2px;text-transform:uppercase;margin-bottom:9px;}
-.op-sections ul{list-style:none;display:flex;flex-direction:column;gap:7px;}
-.op-sections li{font-family:var(--sans);font-size:11.5px;color:var(--mid);padding-left:13px;position:relative;line-height:1.6;}
+.op-sections ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:4px;}
+.op-sections li{font-family:var(--sans);font-size:9px;color:var(--mid);padding-left:10px;position:relative;line-height:1.5;}
 .op-sections li::before{content:'›';position:absolute;left:0;color:var(--purple-mid);}
 
 /* 카드 페이지 */
