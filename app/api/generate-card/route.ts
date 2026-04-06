@@ -166,8 +166,11 @@ html,body{background:#3D1F6B;-webkit-print-color-adjust:exact;print-color-adjust
 .dir-label{font-family:var(--sans);font-size:8px;font-weight:600;color:var(--purple);letter-spacing:1px;margin-bottom:6px;}
 .dir-text{font-family:var(--sans);font-size:10.5px;color:var(--mid);line-height:1.75;word-break:keep-all;}
 .card-when{background:var(--purple-faint);border-left:3px solid var(--purple);border-radius:0 4px 4px 0;padding:9px 12px;margin-top:8px;flex-shrink:0;}
-.when-label{font-family:var(--sans);font-size:8px;font-weight:600;color:var(--purple);letter-spacing:1px;margin-bottom:5px;}
-.when-text{font-family:var(--sans);font-size:11px;color:var(--mid);line-height:1.75;word-break:keep-all;}
+.when-label{font-family:var(--sans);font-size:8px;font-weight:600;color:var(--purple);letter-spacing:1px;margin-bottom:6px;}
+.when-row{display:flex;align-items:flex-start;gap:7px;margin-bottom:4px;}
+.when-row:last-child{margin-bottom:0;}
+.when-tag{font-family:var(--sans);font-size:8px;font-weight:600;color:var(--purple);flex-shrink:0;min-width:36px;padding-top:1px;}
+.when-text{font-family:var(--sans);font-size:10.5px;color:var(--mid);line-height:1.65;word-break:keep-all;}
 .card-quote{background:var(--purple);border-radius:5px;padding:10px 14px;margin-top:10px;flex-shrink:0;text-align:center;}
 .card-quote p{font-family:var(--display);font-size:11px;font-style:italic;color:#fff;line-height:1.7;}
 
@@ -215,7 +218,7 @@ interface CardData {
   upright: string;
   reversed: string;
   quote: string;
-  when: string;
+  when: { love: string; money: string; career: string; };
 }
 
 function buildCardPageHtml(
@@ -226,7 +229,7 @@ function buildCardPageHtml(
 ): string {
   const safeName = name.replace(/\.+$/, "").replace(/&/g, "&amp;");
   const keywords = data.keywords.slice(0, 3).map(k => `<span class="kw-tag">${k}</span>`).join("");
-  return `<div class="pg"><div class="pg-hd"><span>마법의 카드백서 | 바보의 여정으로 읽는 타로 78장</span><span>${suitLabel}</span></div><div class="pg-body"><div class="card-pg-header"><span class="card-pg-num">${num}</span><span class="card-pg-suit">${suitLabel}</span></div><div class="card-pg-title">${safeName}</div><div class="card-pg-rule"></div><div class="card-main"><div class="card-img-wrap"><img src="${BASE_URL}/cards/${file}" alt="${safeName}"><div class="card-roman">${num}</div></div><div class="card-story"><div class="card-story-label">✨ 카드 이야기</div><div class="card-story-text">${trimSentences(data.story, 4)}</div></div></div><div class="card-keywords">${keywords}</div><div class="card-divider"></div><div class="card-directions"><div class="dir-box"><div class="dir-label">☀️ 정방향</div><div class="dir-text">${trimSentences(data.upright, 2)}</div></div><div class="dir-box"><div class="dir-label">🌙 역방향</div><div class="dir-text">${trimSentences(data.reversed, 2)}</div></div></div><div class="card-when"><div class="when-label">💬 이 카드가 나왔을 때</div><div class="when-text">${trimSentences(data.when, 2)}</div></div><div class="card-quote"><p>"${data.quote}"</p></div></div><div class="pg-ft"><div class="pn">${pageNum}</div><div class="pt">Tarot Card Guide</div></div></div>`;
+  return `<div class="pg"><div class="pg-hd"><span>마법의 카드백서 | 바보의 여정으로 읽는 타로 78장</span><span>${suitLabel}</span></div><div class="pg-body"><div class="card-pg-header"><span class="card-pg-num">${num}</span><span class="card-pg-suit">${suitLabel}</span></div><div class="card-pg-title">${safeName}</div><div class="card-pg-rule"></div><div class="card-main"><div class="card-img-wrap"><img src="${BASE_URL}/cards/${file}" alt="${safeName}"><div class="card-roman">${num}</div></div><div class="card-story"><div class="card-story-label">✨ 카드 이야기</div><div class="card-story-text">${trimSentences(data.story, 4)}</div></div></div><div class="card-keywords">${keywords}</div><div class="card-divider"></div><div class="card-directions"><div class="dir-box"><div class="dir-label">☀️ 정방향</div><div class="dir-text">${trimSentences(data.upright, 2)}</div></div><div class="dir-box"><div class="dir-label">🌙 역방향</div><div class="dir-text">${trimSentences(data.reversed, 2)}</div></div></div><div class="card-when"><div class="when-label">💬 이 카드가 나왔을 때</div><div class="when-row"><span class="when-tag">💕 연애</span><span class="when-text">${trimSentences(data.when.love, 1)}</span></div><div class="when-row"><span class="when-tag">💰 금전</span><span class="when-text">${trimSentences(data.when.money, 1)}</span></div><div class="when-row"><span class="when-tag">💼 직업</span><span class="when-text">${trimSentences(data.when.career, 1)}</span></div></div><div class="card-quote"><p>"${data.quote}"</p></div></div><div class="pg-ft"><div class="pn">${pageNum}</div><div class="pt">Tarot Card Guide</div></div></div>`;
 }
 
 // ── 메이저 카드 프롬프트 ──────────────────────────────
@@ -248,7 +251,7 @@ ${prevCard ? `이전 카드: ${prevCard} — 이야기가 자연스럽게 이어
   "upright": "정방향 의미 2~3문장. 구체적이고 실용적으로. 반드시 마침표로 끝낼 것.",
   "reversed": "역방향 의미 2~3문장. 구체적이고 실용적으로. 반드시 마침표로 끝낼 것.",
   "quote": "이 카드의 본질을 담은 인상적인 한 문장.",
-  "when": "연애·금전·직업 등 실제 리딩에서 이 카드가 나왔을 때 어떤 메시지를 전하는지 2문장. 반드시 마침표로 끝낼 것."
+  "when": {"love": "연애 리딩에서 이 카드가 나왔을 때 한 문장. 반드시 마침표로 끝낼 것.", "money": "금전 리딩에서 이 카드가 나왔을 때 한 문장. 반드시 마침표로 끝낼 것.", "career": "직업 리딩에서 이 카드가 나왔을 때 한 문장. 반드시 마침표로 끝낼 것."}
 }
 JSON만 출력.`;
 }
@@ -272,7 +275,7 @@ function buildMinorCardPrompt(card: { file: string; name: string }, suit: string
   "upright": "정방향 의미 2~3문장. 구체적이고 실용적으로. 반드시 마침표로 끝낼 것.",
   "reversed": "역방향 의미 2~3문장. 구체적이고 실용적으로. 반드시 마침표로 끝낼 것.",
   "quote": "이 카드의 본질을 담은 인상적인 한 문장.",
-  "when": "연애·금전·직업 등 실제 리딩에서 이 카드가 나왔을 때 어떤 메시지를 전하는지 2문장. 반드시 마침표로 끝낼 것."
+  "when": {"love": "연애 리딩에서 이 카드가 나왔을 때 한 문장. 반드시 마침표로 끝낼 것.", "money": "금전 리딩에서 이 카드가 나왔을 때 한 문장. 반드시 마침표로 끝낼 것.", "career": "직업 리딩에서 이 카드가 나왔을 때 한 문장. 반드시 마침표로 끝낼 것."}
 }
 JSON만 출력.`;
 }
