@@ -288,15 +288,16 @@ function buildSpreadHtml(
   pageNum: number
 ): string {
   const safeTitle = spread.title.replace(/&/g, "&amp;");
+  const posMax = spread.positions.length >= 5 ? 0 : 1;
   const posRows = spread.positions.map((pos, i) =>
-    `<div class="pos-row"><div class="pos-num">${i+1}</div><div class="pos-content"><div class="pos-title">${pos}</div><div class="pos-desc">${trimSentences(content.positionDescs[i] || "", 2)}</div></div></div>`
+    `<div class="pos-row"><div class="pos-num">${i+1}</div><div class="pos-content"><div class="pos-title">${pos}</div>${posMax > 0 ? `<div class="pos-desc">${trimSentences(content.positionDescs[i] || "", 1)}</div>` : ""}</div></div>`
   ).join("");
   const cardItems = spread.cards.map((file, i) =>
     `<div class="spread-card-item"><img src="${BASE_URL}/cards/${file}" alt="${spread.cardNames[i]}"><div class="spread-card-label">${spread.cardNames[i]}</div></div>`
   ).join("");
   const sitItems = spread.situations.map(s => `<li>${s}</li>`).join("");
 
-  return `<div class="pg"><div class="pg-hd"><span>타로 스프레드 완전 모음집 | 상황별 배열법 완전 정복</span><span>CH 0${chapterNum} · ${chapterTitle}</span></div><div class="pg-body"><div class="spread-badge"><span class="sn">0${si+1}</span><span class="sl">Spread</span></div><div class="spread-title">${safeTitle}</div><div class="spread-subtitle">✦ ${spread.subtitle}</div><div class="spread-rule"></div><div class="spread-desc">${trimSentences(content.desc, 3)}</div><div class="spread-cards">${cardItems}</div><div class="spread-positions">${posRows}</div><div class="spread-situations"><div class="sit-label">이런 상황에서 사용하세요</div><ul class="sit-list">${sitItems}</ul></div><div class="spread-tip"><div class="tip-title">💡 리딩 팁</div><div class="tip-text">${trimSentences(content.tip, 2)}</div></div></div><div class="pg-ft"><div class="pn">${pageNum}</div><div class="pt">Tarot Spread Guide</div></div></div>`;
+  return `<div class="pg"><div class="pg-hd"><span>타로 스프레드 완전 모음집 | 상황별 배열법 완전 정복</span><span>CH 0${chapterNum} · ${chapterTitle}</span></div><div class="pg-body"><div class="spread-badge"><span class="sn">0${si+1}</span><span class="sl">Spread</span></div><div class="spread-title">${safeTitle}</div><div class="spread-subtitle">✦ ${spread.subtitle}</div><div class="spread-rule"></div><div class="spread-desc">${trimSentences(content.desc, 2)}</div><div class="spread-cards">${cardItems}</div><div class="spread-positions">${posRows}</div><div class="spread-situations"><div class="sit-label">이런 상황에서 사용하세요</div><ul class="sit-list">${sitItems}</ul></div><div class="spread-tip"><div class="tip-title">💡 리딩 팁</div><div class="tip-text">${trimSentences(content.tip, 1)}</div></div></div><div class="pg-ft"><div class="pn">${pageNum}</div><div class="pt">Tarot Spread Guide</div></div></div>`;
 }
 
 // ── 스프레드 프롬프트 ─────────────────────────────────
@@ -314,11 +315,11 @@ function buildSpreadPrompt(spread: typeof SPREADS[0]["spreads"][0], chapterTitle
 - 각 항목 충분히 자세하고 풍부하게 작성할 것.
 
 {
-  "desc": "이 스프레드의 특징과 언제 쓰면 좋은지 4~5문장. 이 배열법이 왜 효과적인지 설명. 반드시 마침표로 끝낼 것.",
+  "desc": "이 스프레드의 특징과 언제 쓰면 좋은지 3~4문장. 이 배열법이 왜 효과적인지 설명. 반드시 마침표로 끝낼 것.",
   "positionDescs": [
-    ${spread.positions.map(pos => `"${pos} 위치에서 카드를 어떻게 해석해야 하는지 2~3문장. 구체적인 해석 방법 포함. 반드시 마침표로 끝낼 것."`).join(",\n    ")}
+    ${spread.positions.map(pos => `"${pos} 위치에서 카드를 어떻게 해석해야 하는지 1~2문장. 핵심만 간결하게. 반드시 마침표로 끝낼 것."`).join(",\n    ")}
   ],
-  "tip": "이 스프레드를 실전에서 사용할 때 알아두면 좋은 팁 3~4문장. 흔한 실수나 주의사항 포함. 반드시 마침표로 끝낼 것."
+  "tip": "이 스프레드를 실전에서 사용할 때 알아두면 좋은 팁 2문장. 핵심 주의사항 포함. 반드시 마침표로 끝낼 것."
 }
 JSON만 출력.`;
 }
