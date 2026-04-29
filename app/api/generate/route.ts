@@ -10,13 +10,13 @@ const MAJOR_PAGES = [
   { cards: [{ file: "RWS_Tarot_02_High_Priestess.jpg", name: "여사제 (The High Priestess)", num: "II" }, { file: "RWS_Tarot_03_Empress.jpg", name: "여황제 (The Empress)", num: "III" }] },
   { cards: [{ file: "RWS_Tarot_04_Emperor.jpg", name: "황제 (The Emperor)", num: "IV" }, { file: "RWS_Tarot_05_Hierophant.jpg", name: "교황 (The Hierophant)", num: "V" }] },
   { cards: [{ file: "TheLovers.jpg", name: "연인 (The Lovers)", num: "VI" }, { file: "RWS_Tarot_07_Chariot.jpg", name: "전차 (The Chariot)", num: "VII" }] },
-  { cards: [{ file: "RWS_Tarot_08_Strength.jpg", name: "힘 (Strength)", num: "VIII" }, { file: "RWS_Tarot_09_Hermit.jpg", name: "은둔자 (The Hermit)", num: "IX" }] },
+  { cards: [{ file: "RWS_Tarot_08_Strength.jpg", name: "힘 (Strength)", num: "VIII" }, { file: "RWS_Tarot_09_Hermit.jpg", name: "은둔자", num: "IX" }] },
   { cards: [{ file: "RWS_Tarot_10_Wheel_of_Fortune.jpg", name: "운명의 수레바퀴 (Wheel of Fortune)", num: "X" }, { file: "RWS_Tarot_11_Justice.jpg", name: "정의 (Justice)", num: "XI" }] },
   { cards: [{ file: "RWS_Tarot_12_Hanged_Man.jpg", name: "매달린 사람 (The Hanged Man)", num: "XII" }, { file: "RWS_Tarot_13_Death.jpg", name: "죽음 (Death)", num: "XIII" }] },
   { cards: [{ file: "RWS_Tarot_14_Temperance.jpg", name: "절제 (Temperance)", num: "XIV" }, { file: "RWS_Tarot_15_Devil.jpg", name: "악마 (The Devil)", num: "XV" }] },
-  { cards: [{ file: "RWS_Tarot_16_Tower.jpg", name: "탑 (The Tower)", num: "XVI" }, { file: "RWS_Tarot_17_Star.jpg", name: "별 (The Star)", num: "XVII" }] },
+  { cards: [{ file: "RWS_Tarot_16_Tower.jpg", name: "탑 (The Tower)", num: "XVI" }, { file: "RWS_Tarot_17_Star.jpg", name: "별", num: "XVII" }] },
   { cards: [{ file: "RWS_Tarot_18_Moon.jpg", name: "달 (The Moon)", num: "XVIII" }, { file: "RWS_Tarot_19_Sun.jpg", name: "태양 (The Sun)", num: "XIX" }] },
-  { cards: [{ file: "RWS_Tarot_20_Judgement.jpg", name: "심판 (Judgement)", num: "XX" }, { file: "RWS_Tarot_21_World.jpg", name: "세계 (The World)", num: "XXI" }] },
+  { cards: [{ file: "RWS_Tarot_20_Judgement.jpg", name: "심판 (Judgement)", num: "XX" }, { file: "RWS_Tarot_21_World.jpg", name: "세계", num: "XXI" }] },
 ];
 
 // ── 마이너 아르카나 페이지 정의 (4장씩) ──────────────────
@@ -46,16 +46,16 @@ const CHAPTERS = [
   {
     number: 2, title: "연애 타로의 시작 — 질문법과 리딩 준비",
     sections: [
-      { title: "연애 질문을 제대로 만드는 법", card: "RWS_Tarot_18_Moon.jpg", cardName: "달 (The Moon)", extraCards: [{ file: "RWS_Tarot_17_Star.jpg", name: "별 (The Star)" }] },
-      { title: "리딩 전 마음 세팅과 카드 다루기", card: "RWS_Tarot_02_High_Priestess.jpg", cardName: "여사제 (High Priestess)", extraCards: [{ file: "RWS_Tarot_09_Hermit.jpg", name: "은둔자 (The Hermit)" }] },
+      { title: "연애 질문을 제대로 만드는 법", card: "RWS_Tarot_18_Moon.jpg", cardName: "달", extraCards: [{ file: "RWS_Tarot_17_Star.jpg", name: "별" }] },
+      { title: "리딩 전 마음 세팅과 카드 다루기", card: "RWS_Tarot_02_High_Priestess.jpg", cardName: "여사제", extraCards: [{ file: "RWS_Tarot_09_Hermit.jpg", name: "은둔자" }] },
       { title: "정방향과 역방향, 해석이 달라지는 원리", card: "RWS_Tarot_10_Wheel_of_Fortune.jpg", cardName: "운명의 수레바퀴", extraCards: [{ file: "RWS_Tarot_12_Hanged_Man.jpg", name: "매달린 사람" }] },
-      { title: "카드가 전하는 메시지를 읽는 5가지 원칙", card: "RWS_Tarot_08_Strength.jpg", cardName: "힘 (Strength)", extraCards: [{ file: "RWS_Tarot_21_World.jpg", name: "세계 (The World)" }] },
+      { title: "카드가 전하는 메시지를 읽는 5가지 원칙", card: "RWS_Tarot_08_Strength.jpg", cardName: "힘", extraCards: [{ file: "RWS_Tarot_21_World.jpg", name: "세계" }] },
     ],
   },
   {
     number: 3, title: "카드 위치와 조합 해석 — 순서가 바뀌면 의미도 바뀐다",
     sections: [
-      { title: "3카드 스프레드 — 과거/현재/미래 완전 해석", card: "RWS_Tarot_18_Moon.jpg", cardName: "달 (The Moon)", extraCards: [{ file: "TheLovers.jpg", name: "연인" }, { file: "RWS_Tarot_19_Sun.jpg", name: "태양" }] },
+      { title: "3카드 스프레드 — 과거/현재/미래 완전 해석", card: "RWS_Tarot_18_Moon.jpg", cardName: "달", extraCards: [{ file: "TheLovers.jpg", name: "연인" }, { file: "RWS_Tarot_19_Sun.jpg", name: "태양" }] },
       { title: "5카드 스프레드 — 상황/감정/장애/조언/결과", card: "RWS_Tarot_10_Wheel_of_Fortune.jpg", cardName: "운명의 수레바퀴", extraCards: [{ file: "Cups07.jpg", name: "컵 7" }, { file: "RWS_Tarot_17_Star.jpg", name: "별" }] },
       { title: "카드 조합 해석 — 함께 나오면 달라지는 의미", card: "Cups02.jpg", cardName: "컵 2 (Two of Cups)", extraCards: [{ file: "RWS_Tarot_16_Tower.jpg", name: "탑" }, { file: "RWS_Tarot_15_Devil.jpg", name: "악마" }] },
       { title: "위치별 강화 및 약화 — 같은 카드도 자리가 다르면", card: "RWS_Tarot_02_High_Priestess.jpg", cardName: "여사제", extraCards: [{ file: "RWS_Tarot_20_Judgement.jpg", name: "심판" }] },
@@ -67,7 +67,7 @@ const CHAPTERS = [
       { title: "썸 단계 — 고백 타이밍과 상대 마음 읽기", card: "Cups02.jpg", cardName: "컵 2 (Two of Cups)", extraCards: [{ file: "RWS_Tarot_00_Fool.jpg", name: "바보" }, { file: "Wands12.jpg", name: "완드 나이트" }] },
       { title: "고백하면 받아줄까? 최적의 타이밍 잡기", card: "RWS_Tarot_00_Fool.jpg", cardName: "바보 (The Fool)", extraCards: [{ file: "RWS_Tarot_17_Star.jpg", name: "별" }, { file: "RWS_Tarot_19_Sun.jpg", name: "태양" }] },
       { title: "연인 단계 — 권태기, 신뢰, 미래 확인", card: "TheLovers.jpg", cardName: "연인 (The Lovers)", extraCards: [{ file: "Cups04.jpg", name: "컵 4" }, { file: "RWS_Tarot_15_Devil.jpg", name: "악마" }] },
-      { title: "상대방이 숨기는 감정을 읽는 법", card: "RWS_Tarot_18_Moon.jpg", cardName: "달 (The Moon)", extraCards: [{ file: "Swords07.jpg", name: "검 7" }, { file: "RWS_Tarot_12_Hanged_Man.jpg", name: "매달린 사람" }] },
+      { title: "상대방이 숨기는 감정을 읽는 법", card: "RWS_Tarot_18_Moon.jpg", cardName: "달", extraCards: [{ file: "Swords07.jpg", name: "검 7" }, { file: "RWS_Tarot_12_Hanged_Man.jpg", name: "매달린 사람" }] },
     ],
   },
   {
@@ -420,7 +420,7 @@ function buildSectionHtml(
   let html = "";
   let pg = startPage;
   const hd = `<div class="pg-hd"><span>마법의 연애백서 | 타로로 꿰뚫는 상대의 속마음</span><span>CH 0${chapterNum} · ${chapterTitle}</span></div>`;
-  const safeTitle = sec.title.replace(/&/g, "&amp;");
+  const safeTitle = sec.title.replace(/&/g, "&amp;").replace(/\.+$/, "");
   const badge = `<div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">Section</span></div><div class="sec-title">${safeTitle}</div><div class="sec-rule"></div>`;
 
   // 페이지 1: 카드 + 소제목 1~2 (각 3문장)
@@ -433,7 +433,7 @@ function buildSectionHtml(
   html += `<div class="pg">${hd}<div class="pg-body">${badge}${multiCardsHtml}<div class="cmp-row"><div class="bad-box"><div class="box-title">✕ 이렇게 하면 안 돼요</div><ul>${sec.badExamples.slice(0,3).map(e=>`<li>${e}</li>`).join("")}</ul></div><div class="good-box"><div class="box-title">✓ 이렇게 해보세요</div><ul>${sec.goodExamples.slice(0,3).map(e=>`<li>${e}</li>`).join("")}</ul></div></div>${sec.subheadings[2]?`<div class="sub-h">${sec.subheadings[2].title}</div><p class="body-p">${trimSentences(sec.subheadings[2].body,3)}</p>`:""}<div class="quote-box"><p>"${sec.quote}"</p></div></div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
 
   // 페이지 3: 표 + 핵심정리 + 팁
-  html += `<div class="pg"><div class="pg-hd"><span>마법의 연애백서 | 타로로 꿰뚫는 상대의 속마음</span><span>CH 0${chapterNum} · 실전 정리</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 정리</span></div><div class="sec-title">${safeTitle}</div><div class="sec-rule"></div><table class="data-table"><thead><tr>${sec.tableHeaders.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${sec.tableRows.map(r=>`<tr><td>${r.col1}</td><td>${r.col2}</td><td>${r.col3}</td></tr>`).join("")}</tbody></table><div class="div-rule"></div><div class="sub-h">🌹 핵심 정리</div><p class="body-p">${trimSentences(sec.subheadings[0]?.body??"",2)}</p><div class="tip-box"><div class="tip-title">Golden Tip</div><p>${trimSentences(sec.tip,2)}</p></div></div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
+  html += `<div class="pg"><div class="pg-hd"><span>마법의 연애백서 | 타로로 꿰뚫는 상대의 속마음</span><span>CH 0${chapterNum} · 실전 정리</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 정리</span></div><div class="sec-title">${safeTitle}</div><div class="sec-rule"></div><table class="data-table"><thead><tr>${sec.tableHeaders.map(h=>`<th>${h.replace(/\.+$/, "")}</th>`).join("")}</tr></thead><tbody>${sec.tableRows.map(r=>`<tr><td>${r.col1.replace(/\.+$/, "")}</td><td>${r.col2.replace(/\.+$/, "")}</td><td>${r.col3.replace(/\.+$/, "")}</td></tr>`).join("")}</tbody></table><div class="div-rule"></div><div class="sub-h">🌹 핵심 정리</div><p class="body-p">${trimSentences(sec.subheadings[0]?.body??"",2)}</p><div class="tip-box"><div class="tip-title">Golden Tip</div><p>${trimSentences(sec.tip,2)}</p></div></div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
 
   // 페이지 4: 케이스 2개 + 핵심요약 + 퀴즈 (한 페이지)
   const secWithQuiz = sec as SectionData & { quiz?: { question: string; hint: string; answer: string } };
@@ -479,6 +479,7 @@ function buildSectionPrompt(
 - 독자가 이 섹션만 읽어도 모든 카드 조합/위치를 스스로 해석할 수 있어야 함.
 - 반드시 존댓말(~해요, ~입니다, ~이에요)로만 작성할 것. 반말, 단답형, ~한다, ~이다, ~해라 절대 금지.
 - 카드 이름은 반드시 한국어로 작성할 것. 예: 달, 탑, 태양, 바보, 컵 2, 검 3 등. 영어 카드명 절대 금지.
+- 케이스와 퀴즈는 반드시 연애·관계·감정에 관한 내용으로만 작성할 것. 커리어·금전·자아성찰 내용 절대 금지.
 
 {
   "title": "${section.title}",
@@ -684,7 +685,7 @@ export async function POST(req: NextRequest) {
 
     const msg = await client.messages.create({
       model: "claude-opus-4-5",
-      max_tokens: chapter.number === 2 ? 8000 : 16000,
+      max_tokens: chapter.number === 2 ? 12000 : 16000,
       messages: [{ role: "user", content: buildSectionPrompt(chapter.number, chapter.title, section, sectionIndex) }],
     });
     const raw = msg.content[0];
@@ -693,7 +694,19 @@ export async function POST(req: NextRequest) {
 
     let secData: SectionData;
     try { secData = JSON.parse(jsonStr); }
-    catch { return NextResponse.json({ error: "JSON 파싱 실패: " + jsonStr.substring(0,200) }, { status: 500 }); }
+    catch {
+      // JSON 파싱 실패 시 자동 재시도
+      const retryMsg = await client.messages.create({
+        model: "claude-opus-4-5",
+        max_tokens: chapter.number === 2 ? 12000 : 16000,
+        messages: [{ role: "user", content: buildSectionPrompt(chapter.number, chapter.title, section, sectionIndex) }],
+      });
+      const retryRaw = retryMsg.content[0];
+      if (retryRaw.type !== "text") return NextResponse.json({ error: "재시도 응답 없음" }, { status: 500 });
+      let retryJsonStr = retryRaw.text.trim().replace(/```json\n?/g,"").replace(/```\n?/g,"").trim();
+      try { secData = JSON.parse(retryJsonStr); }
+      catch { return NextResponse.json({ error: "JSON 파싱 실패 (재시도 후): " + retryJsonStr.substring(0,200) }, { status: 500 }); }
+    }
 
     const isLastSection = sectionIndex === chapter.sections.length - 1;
     const sectionHtml = buildSectionHtml(chapter.number, chapter.title, secData, section.extraCards, sectionIndex, startPage);
