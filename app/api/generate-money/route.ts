@@ -437,9 +437,9 @@ function buildSectionHtml(
   // 페이지 4
   const secWithQuiz = sec as SectionData & { quiz?: { question: string; hint: string; answer: string } };
   const quizBlock = secWithQuiz.quiz
-    ? `<div class="quiz-box"><div class="quiz-title">🎯 실전 퀴즈</div><p class="quiz-q">${secWithQuiz.quiz.question}</p><p class="quiz-hint">${secWithQuiz.quiz.hint}</p><div class="quiz-answer-box"><div class="quiz-answer-label">정답 해설 ▼</div><p class="quiz-answer">${trimSentences(secWithQuiz.quiz.answer,3)}</p></div></div>`
+    ? `<div class="quiz-box"><div class="quiz-title">🎯 실전 퀴즈</div><p class="quiz-q">${secWithQuiz.quiz.question}</p><p class="quiz-hint">${secWithQuiz.quiz.hint}</p><div class="quiz-answer-box"><div class="quiz-answer-label">정답 해설 ▼</div><p class="quiz-answer">${(sec.title.includes("5카드 스프레드") || sec.title.includes("부동산 및 큰 자산") ? trimSentences(secWithQuiz.quiz.answer,2) : trimSentences(secWithQuiz.quiz.answer,3))}</p></div></div>`
     : "";
-  html += `<div class="pg"><div class="pg-hd"><span>마법의 금전백서 | 타로로 꿰뚫는 나의 금전 흐름</span><span>CH 0${chapterNum} · 실전 상담 케이스</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 상담 케이스</span></div><div class="sec-title">${safeTitle}</div><div class="sec-rule"></div>${sec.cases.slice(0,2).map((c,i)=>`<div class="case-box"><div class="case-title">💬 케이스 ${i+1}</div><p class="case-q">Q. ${c.question}</p><p class="case-a">A. ${trimSentences(c.answer,3)}</p></div>`).join("")}<div class="tip-box"><div class="tip-title">✦ 이 섹션 핵심 요약</div><p>${sec.summary.slice(0,2).join(" ")}</p></div>${quizBlock}</div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Money Guide</div></div></div>`;
+  html += `<div class="pg"><div class="pg-hd"><span>마법의 금전백서 | 타로로 꿰뚫는 나의 금전 흐름</span><span>CH 0${chapterNum} · 실전 상담 케이스</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 상담 케이스</span></div><div class="sec-title">${safeTitle}</div><div class="sec-rule"></div>${sec.cases.slice(0,2).map((c,i)=>`<div class="case-box"><div class="case-title">💬 케이스 ${i+1}</div><p class="case-q">Q. ${c.question}</p><p class="case-a">A. ${(sec.title.includes("5카드 스프레드") ? trimSentences(c.answer,2) : trimSentences(c.answer,3))}</p></div>`).join("")}<div class="tip-box"><div class="tip-title">✦ 이 섹션 핵심 요약</div><p>${sec.summary.slice(0,2).join(" ")}</p></div>${quizBlock}</div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Money Guide</div></div></div>`;
 
   return html;
 }
@@ -476,9 +476,9 @@ function buildSectionPrompt(
 - 메이저/마이너, 원소별, 정방향/역방향에 따른 금전 해석 원칙 포함.
 - 반드시 존댓말(~해요, ~입니다, ~이에요)로만 작성할 것. 반말, 단답형, ~한다, ~이다, ~해라 절대 금지.
 - 카드 이름은 반드시 한국어로 작성할 것. 영어 카드명 절대 금지.
-- 카드 한국어명 주의: 행맨→매달린 사람, The Fool→바보, The Hermit→은둔자, Wheel of Fortune→운명의 수레바퀴로 작성할 것.
+- 카드 한국어명 주의: 여황제→여황제, 매달린 사람→매달린 사람, 검 킹→검 킹, The Fool→바보, The Hermit→은둔자, Wheel of Fortune→운명의 수레바퀴로 작성할 것.
 - 케이스와 퀴즈는 반드시 금전·재테크에 관한 내용으로만 작성할 것. 연애·자아성찰 내용 절대 금지.
-- 카드 이름 표기: 매달린 사람(행맨 금지), 운명의 수레바퀴, 힘, 달, 태양, 별, 심판, 세계 등 반드시 한국어로 작성.
+- 카드 이름 표기: 매달린 사람(매달린 사람 금지), 운명의 수레바퀴, 힘, 달, 태양, 별, 심판, 세계 등 반드시 한국어로 작성.
 
 {
   "title": "${section.title}",
@@ -535,9 +535,9 @@ JSON만 출력.`;
 - 마지막 퀴즈는 실제 3~5장 배열을 제시하고 독자가 스스로 해석해보게 할 것.
 - 반드시 존댓말(~해요, ~입니다, ~이에요)로만 작성할 것. 반말, 단답형, ~한다, ~이다, ~해라 절대 금지.
 - 카드 이름은 반드시 한국어로 작성할 것. 영어 카드명 절대 금지.
-- 카드 한국어명 주의: 행맨→매달린 사람, The Fool→바보, The Hermit→은둔자, Wheel of Fortune→운명의 수레바퀴로 작성할 것.
+- 카드 한국어명 주의: 여황제→여황제, 매달린 사람→매달린 사람, 검 킹→검 킹, The Fool→바보, The Hermit→은둔자, Wheel of Fortune→운명의 수레바퀴로 작성할 것.
 - 케이스와 퀴즈는 반드시 금전·재테크에 관한 내용으로만 작성할 것. 연애·자아성찰 내용 절대 금지.
-- 카드 이름 표기: 매달린 사람(행맨 금지), 운명의 수레바퀴, 힘, 달, 태양, 별, 심판, 세계 등 반드시 한국어로 작성.
+- 카드 이름 표기: 매달린 사람(매달린 사람 금지), 운명의 수레바퀴, 힘, 달, 태양, 별, 심판, 세계 등 반드시 한국어로 작성.
 
 {
   "title": "${section.title}",
