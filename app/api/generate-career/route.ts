@@ -429,13 +429,13 @@ function buildSectionHtml(
     : "";
   html += `<div class="pg">${hd}<div class="pg-body">${badge}${multiCardsHtml}<div class="cmp-row"><div class="bad-box"><div class="box-title">✕ 이렇게 하면 안 돼요</div><ul>${sec.badExamples.slice(0,3).map(e=>`<li>${e}</li>`).join("")}</ul></div><div class="good-box"><div class="box-title">✓ 이렇게 해보세요</div><ul>${sec.goodExamples.slice(0,3).map(e=>`<li>${e}</li>`).join("")}</ul></div></div>${sec.subheadings[2]?`<div class="sub-h">${sec.subheadings[2].title}</div><p class="body-p">${trimSentences(sec.subheadings[2].body,3)}</p>`:""}<div class="quote-box"><p>"${sec.quote}"</p></div></div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Career Guide</div></div></div>`;
 
-  html += `<div class="pg"><div class="pg-hd"><span>마법의 직업백서 | 타로로 꿰뚫는 나의 커리어 흐름</span><span>CH 0${chapterNum} · 실전 정리</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 정리</span></div><div class="sec-title">${safeTitle}</div><div class="sec-rule"></div><table class="data-table"><thead><tr>${sec.tableHeaders.map(h=>`<th>${h.replace(/\.+$/, "")}</th>`).join("")}</tr></thead><tbody>${sec.tableRows.map(r=>`<tr><td>${r.col1.replace(/\.+$/, "")}</td><td>${r.col2.replace(/\.+$/, "")}</td><td>${r.col3.replace(/\.+$/, "")}</td></tr>`).join("")}</tbody></table><div class="div-rule"></div><div class="sub-h">🌹 핵심 정리</div><p class="body-p">${trimSentences(sec.subheadings[0]?.body??"",2)}</p><div class="tip-box"><div class="tip-title">Golden Tip</div><p>${trimSentences(sec.tip,2)}</p></div></div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Career Guide</div></div></div>`;
+  html += `<div class="pg"><div class="pg-hd"><span>마법의 직업백서 | 타로로 꿰뚫는 나의 커리어 흐름</span><span>CH 0${chapterNum} · 실전 정리</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 정리</span></div><div class="sec-title">${safeTitle}</div><div class="sec-rule"></div><table class="data-table"><thead><tr>${sec.tableHeaders.map(h=>`<th>${h.replace(/\.+$/, "")}</th>`).join("")}</tr></thead><tbody>${sec.tableRows.map(r=>`<tr><td>${r.col1.replace(/\.+$/, "")}</td><td>${r.col2.replace(/\.+$/, "")}</td><td>${r.col3.replace(/\.+$/, "")}</td></tr>`).join("")}</tbody></table><div class="div-rule"></div><div class="sub-h">🌹 핵심 정리</div><p class="body-p">${(sec.title.includes("5카드 스프레드") ? trimSentences(sec.subheadings[0]?.body??"",3) : trimSentences(sec.subheadings[0]?.body??"",2))}</p><div class="tip-box"><div class="tip-title">Golden Tip</div><p>${trimSentences(sec.tip,2)}</p></div></div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Career Guide</div></div></div>`;
 
   const secWithQuiz = sec as SectionData & { quiz?: { question: string; hint: string; answer: string } };
   const quizBlock = secWithQuiz.quiz
     ? `<div class="quiz-box"><div class="quiz-title">🎯 실전 퀴즈</div><p class="quiz-q">${secWithQuiz.quiz.question}</p><p class="quiz-hint">${secWithQuiz.quiz.hint}</p><div class="quiz-answer-box"><div class="quiz-answer-label">정답 해설 ▼</div><p class="quiz-answer">${trimSentences(secWithQuiz.quiz.answer,3)}</p></div></div>`
     : "";
-  html += `<div class="pg"><div class="pg-hd"><span>마법의 직업백서 | 타로로 꿰뚫는 나의 커리어 흐름</span><span>CH 0${chapterNum} · 실전 상담 케이스</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 상담 케이스</span></div><div class="sec-title">${safeTitle}</div><div class="sec-rule"></div>${(() => { const caseMax = sec.title.includes("5카드 스프레드") ? 1 : 2; return sec.cases.slice(0,caseMax).map((c,i)=>`<div class="case-box"><div class="case-title">💬 케이스 ${i+1}</div><p class="case-q">Q. ${c.question}</p><p class="case-a">A. ${trimSentences(c.answer,3)}</p></div>`).join(""); })()}<div class="tip-box"><div class="tip-title">✦ 이 섹션 핵심 요약</div><p>${sec.summary.slice(0,2).join(" ")}</p></div>${quizBlock}</div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Career Guide</div></div></div>`;
+  html += `<div class="pg"><div class="pg-hd"><span>마법의 직업백서 | 타로로 꿰뚫는 나의 커리어 흐름</span><span>CH 0${chapterNum} · 실전 상담 케이스</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 상담 케이스</span></div><div class="sec-title">${safeTitle}</div><div class="sec-rule"></div>${(() => { const caseMax = 2; return sec.cases.slice(0,caseMax).map((c,i)=>`<div class="case-box"><div class="case-title">💬 케이스 ${i+1}</div><p class="case-q">Q. ${c.question}</p><p class="case-a">A. ${trimSentences(c.answer,3)}</p></div>`).join(""); })()}<div class="tip-box"><div class="tip-title">✦ 이 섹션 핵심 요약</div><p>${sec.summary.slice(0,2).join(" ")}</p></div>${quizBlock}</div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Career Guide</div></div></div>`;
 
   return html;
 }
@@ -460,6 +460,18 @@ function buildSectionPrompt(
   const extraList = section.extraCards.map(c=>`- ${c.name} (${c.file})`).join("\n");
 
   if (chapterNum === 3) {
+    const is3card = section.title.includes("3카드 스프레드");
+    const is5card = section.title.includes("5카드 스프레드");
+    const sub1Body = is3card
+      ? "2문장. 과거/현재/미래 3개 위치를 모두 포함해 하나의 흐름으로 통합 설명. 과거(원인/배경)→현재(에너지/선택)→미래(결과/방향) 순서로 압축하되 미래 내용까지 빠짐없이. 카드명 명시. 반드시 존댓말로, 마침표로 끝낼 것."
+      : is5card
+      ? "2문장. 상황/원인/장애/조언/결과 5개 위치를 모두 포함해 하나의 흐름으로 통합 설명. 각 위치 역할을 압축하되 조언·결과 내용까지 빠짐없이. 카드명 명시. 반드시 존댓말로, 마침표로 끝낼 것."
+      : "5~6문장. 커리어 리딩에서 통용되는 위치/조합 해석 원칙. 반드시 마침표로 끝낼 것.";
+    const sub2Body = is3card
+      ? "2문장. 컵/완드/검/펜타클 4개 원소가 과거/현재/미래 각 위치에 올 때 커리어 의미를 하나의 흐름으로 통합 설명. 4개 원소 모두 빠짐없이. 카드명 명시. 반드시 마침표로 끝낼 것."
+      : is5card
+      ? "2문장. 컵/완드/검/펜타클 4개 원소가 상황/원인/장애/조언/결과 각 위치에 올 때 커리어 의미를 하나의 흐름으로 통합 설명. 4개 원소 모두 빠짐없이. 카드명 명시. 반드시 마침표로 끝낼 것."
+      : "5~6문장. 컵/완드/검/펜타클이 커리어 위치에 오면 어떻게 해석하는지. 반드시 마침표로 끝낼 것.";
     return `타로 전자책 전문 작가입니다. 섹션 1개의 내용을 JSON으로만 작성하세요. JSON 외 텍스트 절대 금지.
 
 챕터 3: ${chapterTitle}
@@ -482,9 +494,9 @@ function buildSectionPrompt(
   "cardDesc": "이 섹션 주제(${section.title})를 한눈에 설명하는 7~8문장. 커리어 리딩 핵심 의미와 실제 직업 상황 예시 포함. 독자가 바로 공감할 수 있게 구체적으로. 반드시 존댓말로, 마침표로 끝낼 것.",
   "cardTagline": "이 섹션의 핵심 원칙 한 줄.",
   "subheadings": [
-    {"title": "🔮 소제목1 — 원칙 설명", "body": "5~6문장. 커리어 리딩에서 통용되는 위치/조합 해석 원칙. 반드시 마침표로 끝낼 것."},
-    {"title": "💡 소제목2 — 원소별 적용", "body": "5~6문장. 컵/완드/검/펜타클이 커리어 위치에 오면 어떻게 해석하는지. 반드시 마침표로 끝낼 것."},
-    {"title": "💬 소제목3 — 실전 적용법", "body": "5~6문장. 실제 커리어 리딩에서 이 원칙을 어떻게 적용하는지. 반드시 마침표로 끝낼 것."}
+    {"title": "🔮 소제목1 — 원칙 설명", "body": "${sub1Body}"},
+    {"title": "💡 소제목2 — 원소별 적용", "body": "${sub2Body}"},
+    {"title": "💬 소제목3 — 실전 적용법", "body": "5~6문장. 실제 커리어 리딩에서 이 원칙을 어떻게 적용하는지. 반드시 카드 이름을 명시하며 그 카드가 나왔을 때 어떻게 해석하는지 설명할 것. 절대 이 카드 라고만 쓰지 말 것. 반드시 마침표로 끝낼 것."}
   ],
   "extraCards": [
     ${section.extraCards.map(c=>`{"file": "${c.file}", "name": "${c.name}", "interp": "이 카드가 해당 커리어 위치/조합에서 갖는 의미 한 줄."}`).join(",\n    ")}
