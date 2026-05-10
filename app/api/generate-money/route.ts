@@ -1,9 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { NextRequest, NextResponse } from "next/server";
-
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 const BASE_URL = "https://ebookmaker.vercel.app";
-
 // ── 메이저 아르카나 페이지 정의 (2장씩) ──────────────────
 const MAJOR_PAGES = [
   { cards: [{ file: "RWS_Tarot_00_Fool.jpg", name: "바보 (The Fool)", num: "0" }, { file: "RWS_Tarot_01_Magician.jpg", name: "마법사 (The Magician)", num: "I" }] },
@@ -18,7 +16,6 @@ const MAJOR_PAGES = [
   { cards: [{ file: "RWS_Tarot_18_Moon.jpg", name: "달 (The Moon)", num: "XVIII" }, { file: "RWS_Tarot_19_Sun.jpg", name: "태양 (The Sun)", num: "XIX" }] },
   { cards: [{ file: "RWS_Tarot_20_Judgement.jpg", name: "심판 (Judgement)", num: "XX" }, { file: "RWS_Tarot_21_World.jpg", name: "세계 (The World)", num: "XXI" }] },
 ];
-
 // ── 마이너 아르카나 페이지 정의 (4장씩) ──────────────────
 const MINOR_PAGES = [
   { suit: "컵 (Cups) — 감정과 직관", cards: [{ file: "Cups01.jpg", name: "컵 에이스" }, { file: "Cups02.jpg", name: "컵 2" }, { file: "Cups03.jpg", name: "컵 3" }, { file: "Cups04.jpg", name: "컵 4" }] },
@@ -36,7 +33,6 @@ const MINOR_PAGES = [
   { suit: "펜타클 (Pentacles) — 돈과 물질", cards: [{ file: "Pents07.jpg", name: "펜타클 7" }, { file: "Pents08.jpg", name: "펜타클 8" }, { file: "Pents09.jpg", name: "펜타클 9" }, { file: "Pents10.jpg", name: "펜타클 10" }] },
   { suit: "펜타클 (Pentacles) — 돈과 물질", cards: [{ file: "Pents11.jpg", name: "펜타클 페이지" }, { file: "Pents12.jpg", name: "펜타클 나이트" }, { file: "Pents13.jpg", name: "펜타클 퀸" }, { file: "Pents14.jpg", name: "펜타클 킹" }] },
 ];
-
 // ── 챕터 2~5 정의 (금전편) ──────────────────────────────
 const CHAPTERS = [
   {
@@ -77,7 +73,6 @@ const CHAPTERS = [
     ],
   },
 ];
-
 // ── CSS (골드/노란 톤) ──────────────────────────────────
 const CSS = `@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -97,8 +92,6 @@ html,body{background:#B8A870;-webkit-print-color-adjust:exact;print-color-adjust
 .pg-ft .pn{font-family:var(--display);font-size:10px;color:var(--light);}
 .pg-ft .pt{font-family:var(--sans);font-size:6.5px;color:var(--gold-lt);letter-spacing:1.5px;text-transform:uppercase;}
 .pg-body{padding:10px 17px 20px;display:flex;flex-direction:column;gap:0;flex:1;}
-
-/* 카드 레퍼런스 — 메이저 */
 .card-ref-half{flex:1;display:flex;flex-direction:row;gap:12px;padding:8px 0;border-bottom:0.5px solid var(--divider);}
 .card-ref-half:last-child{border-bottom:none;}
 .card-ref-img{flex-shrink:0;text-align:center;}
@@ -115,8 +108,6 @@ html,body{background:#B8A870;-webkit-print-color-adjust:exact;print-color-adjust
 .card-ref-consult{background:var(--gold-faint);border-left:2px solid var(--gold-lt);padding:4px 7px;margin-top:4px;border-radius:0 3px 3px 0;}
 .card-ref-consult-label{font-family:var(--sans);font-size:7.5px;font-weight:600;color:var(--gold);margin-bottom:2px;}
 .card-ref-consult-text{font-family:var(--sans);font-size:9px;color:var(--mid);line-height:1.7;word-break:keep-all;}
-
-/* 카드 레퍼런스 — 마이너 */
 .minor-suit-title{font-family:var(--serif);font-size:10px;font-weight:600;color:var(--gold);margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid var(--gold-lt);flex-shrink:0;}
 .minor-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:1;}
 .minor-card{background:var(--gold-faint);border:0.5px solid var(--gold-lt);border-radius:4px;padding:8px;display:flex;flex-direction:column;}
@@ -128,8 +119,6 @@ html,body{background:#B8A870;-webkit-print-color-adjust:exact;print-color-adjust
 .minor-card-row{margin-bottom:3px;}
 .minor-card-rl{font-family:var(--serif);font-size:8px;font-weight:600;color:var(--gold);margin-bottom:1px;}
 .minor-card-rt{font-family:var(--sans);font-size:8.5px;color:var(--mid);line-height:1.65;word-break:keep-all;}
-
-/* 챕터 오프너 */
 .opener-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 26px;text-align:center;}
 .op-label{font-family:var(--display);font-size:9px;color:var(--gold-mid);letter-spacing:5px;text-transform:uppercase;margin-bottom:6px;}
 .op-num{font-family:var(--display);font-size:68px;font-weight:700;color:var(--gold-lt);line-height:1;margin-bottom:4px;}
@@ -141,8 +130,6 @@ html,body{background:#B8A870;-webkit-print-color-adjust:exact;print-color-adjust
 .op-sections ul{list-style:none;display:flex;flex-direction:column;gap:7px;}
 .op-sections li{font-family:var(--sans);font-size:11.5px;color:var(--mid);padding-left:13px;position:relative;line-height:1.6;}
 .op-sections li::before{content:'›';position:absolute;left:0;color:var(--gold-mid);}
-
-/* 섹션 내용 */
 .sec-badge{display:flex;align-items:center;gap:6px;margin-bottom:4px;}
 .sec-badge .sn{font-family:var(--display);font-size:9px;font-weight:700;color:var(--gold-lt);letter-spacing:1px;}
 .sec-badge .sl{font-family:var(--sans);font-size:6.5px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;}
@@ -222,7 +209,6 @@ html,body{background:#B8A870;-webkit-print-color-adjust:exact;print-color-adjust
 .cover-bottom{margin-top:auto;background:var(--gold);padding:11px 26px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;}
 .cover-bottom-l{font-family:var(--display);font-size:8px;letter-spacing:2px;color:rgba(255,255,255,0.8);text-transform:uppercase;}
 .cover-bottom-r{font-family:var(--sans);font-size:7.5px;color:rgba(255,255,255,0.6);}`;
-
 // ── 표지 ──────────────────────────────────────────────
 function buildCoverHtml(): string {
   const cards = [
@@ -234,24 +220,17 @@ function buildCoverHtml(): string {
   ];
   return `<div class="pg"><div class="cover-top"><div class="cover-vol-en">Volume 01 · Tarot Money Guide</div><div class="cover-vol-kr">제 1 권</div></div><div class="cover-cards-row">${cards.map(c=>`<div class="c-card"><img src="${BASE_URL}/cards/${c.file}" style="width:${c.w}px;margin-bottom:${c.mb}px;opacity:${c.op};" alt="${c.label}"><div class="clbl">${c.label}</div></div>`).join("")}</div><div class="cover-title-block"><div class="cover-main-title">3초만에 외워지는<br>마법의 금전백서</div><div class="cover-rule"></div><div class="cover-subtitle">타로로 꿰뚫는 나의 금전 흐름</div><div class="cover-tagline">제1권 · 이 책 한 권으로 타로 금전 상담사 완전 정복</div></div><div class="cover-dots"><span></span><span class="on"></span><span></span></div><div class="cover-learn"><h4>이 책에서 배울 것들</h4><ul><li>메이저 아르카나 22장 + 마이너 56장 금전 해석 완전 정복</li><li>정방향·역방향·위치별 해석이 한눈에</li><li>3카드·5카드 스프레드 실전 적용법</li><li>수입·지출·투자·사업·부동산 실전 케이스</li><li>이 책 한 권으로 타로 금전 상담사 데뷔 가능</li></ul></div><div class="cover-toc">${["카드레퍼런스","질문법·준비","위치·조합","실전Ⅰ","실전Ⅱ"].map((t,i)=>`<div class="toc-cell"><div class="tn">0${i+1}</div><div class="tl">${t}</div></div>`).join("")}</div><div class="cover-bottom"><div class="cover-bottom-l">Tarot Money Guide</div><div class="cover-bottom-r">제1권 · 타로 금전 상담사 완전 정복</div></div></div>`;
 }
-
-// ── 챕터 1 오프너 ──────────────────────────────────────
 function buildChapter1OpenerHtml(pageNum: number): string {
   return `<div class="pg"><div class="pg-hd"><span>마법의 금전백서 | 타로로 꿰뚫는 나의 금전 흐름</span><span>CHAPTER 01</span></div><div class="opener-body"><div class="op-label">CHAPTER</div><div class="op-num">01</div><div class="op-title">타로카드 78장<br>금전 해석 레퍼런스</div><div class="op-rule"></div><div class="op-desc">이 챕터는 타로카드 78장의 금전 의미를 한눈에 정리한 레퍼런스입니다. 리딩 중 카드가 나왔을 때 바로 찾아볼 수 있도록 정방향·역방향·금전 상담 적용법을 모두 담았습니다.</div><div class="op-sections"><h4>이번 챕터 구성</h4><ul><li>메이저 아르카나 22장 — 한 페이지에 2장씩 정리</li><li>마이너 아르카나 56장 — 원소별로 4장씩 정리</li><li>각 카드별 정방향·역방향·금전 상담 적용법 수록</li></ul></div></div><div class="pg-ft"><div class="pn">${pageNum}</div><div class="pt">Tarot Money Guide</div></div></div>`;
 }
-
-// ── 메이저 카드 프롬프트 ────────────────────────────────
 function buildMajorPrompt(card1: {file:string;name:string;num:string}, card2: {file:string;name:string;num:string}): string {
   return `타로 전자책 작가입니다. 아래 두 메이저 아르카나 카드의 금전 해석을 JSON으로만 작성하세요. JSON 외 텍스트 절대 금지.
-
 카드1: ${card1.name} (${card1.num}번)
 카드2: ${card2.name} (${card2.num}번)
-
 중요 규칙:
 - 모든 문장은 반드시 마침표(.)로 완전하게 끝낼 것.
 - 금전/재테크/직업 리딩 전문가 관점으로 구어체로 작성할 것.
 - 각 항목을 충분히 자세하게 작성하여 내용이 풍부하게 보일 것.
-
 {
   "card1": {
     "name": "${card1.name}",
@@ -272,19 +251,14 @@ function buildMajorPrompt(card1: {file:string;name:string;num:string}, card2: {f
 }
 JSON만 출력.`;
 }
-
-// ── 마이너 카드 프롬프트 ────────────────────────────────
 function buildMinorPrompt(suit: string, cards: {file:string;name:string}[]): string {
   return `타로 전자책 작가입니다. 아래 마이너 아르카나 카드들의 금전 해석을 JSON으로만 작성하세요. JSON 외 텍스트 절대 금지.
-
 원소: ${suit}
 카드: ${cards.map(c=>c.name).join(", ")}
-
 중요 규칙:
 - 모든 문장은 반드시 마침표(.)로 완전하게 끝낼 것.
 - 금전/재테크/직업 리딩 전문가 관점으로 구어체로 작성할 것.
 - 각 항목 충분히 자세하게 작성할 것.
-
 {
   "cards": [
     ${cards.map(c=>`{
@@ -297,13 +271,10 @@ function buildMinorPrompt(suit: string, cards: {file:string;name:string}[]): str
 }
 JSON만 출력.`;
 }
-
-// ── 메이저 카드 HTML 빌더 ──────────────────────────────
 interface MajorCardData {
   name: string; num: string; keywords: string;
   upright: string; reversed: string; consult: string;
 }
-
 function buildMajorPageHtml(
   card1Data: MajorCardData, card1File: string,
   card2Data: MajorCardData, card2File: string,
@@ -332,7 +303,6 @@ function buildMajorPageHtml(
         </div>
       </div>
     </div>`;
-
   return `<div class="pg">
   <div class="pg-hd"><span>마법의 금전백서 | 타로로 꿰뚫는 나의 금전 흐름</span><span>CH 01 · 메이저 아르카나 금전 해석</span></div>
   <div class="pg-body">
@@ -342,10 +312,7 @@ function buildMajorPageHtml(
   <div class="pg-ft"><div class="pn">${pageNum}</div><div class="pt">Tarot Money Guide</div></div>
 </div>`;
 }
-
-// ── 마이너 카드 HTML 빌더 ──────────────────────────────
 interface MinorCardData { name: string; keywords: string; upright: string; reversed: string; }
-
 function buildMinorPageHtml(
   suit: string,
   cardsData: MinorCardData[],
@@ -373,7 +340,6 @@ function buildMinorPageHtml(
       </div>
     </div>`
   ).join("");
-
   return `<div class="pg">
   <div class="pg-hd"><span>마법의 금전백서 | 타로로 꿰뚫는 나의 금전 흐름</span><span>CH 01 · ${suit}</span></div>
   <div class="pg-body">
@@ -383,13 +349,9 @@ function buildMinorPageHtml(
   <div class="pg-ft"><div class="pn">${pageNum}</div><div class="pt">Tarot Money Guide</div></div>
 </div>`;
 }
-
-// ── 챕터 오프너 ────────────────────────────────────────
 function buildOpenerHtml(chapterNum: number, chapterTitle: string, chapterDesc: string, sections: {title:string}[], pageNum: number): string {
   return `<div class="pg"><div class="pg-hd"><span>마법의 금전백서 | 타로로 꿰뚫는 나의 금전 흐름</span><span>CHAPTER 0${chapterNum}</span></div><div class="opener-body"><div class="op-label">CHAPTER</div><div class="op-num">0${chapterNum}</div><div class="op-title">${chapterTitle}</div><div class="op-rule"></div><div class="op-desc">${chapterDesc}</div><div class="op-sections"><h4>이번 챕터에서 배울 것들</h4><ul>${sections.map(s=>`<li>${s.title}</li>`).join("")}</ul></div></div><div class="pg-ft"><div class="pn">${pageNum}</div><div class="pt">Tarot Money Guide</div></div></div>`;
 }
-
-// ── 섹션 HTML 빌더 ─────────────────────────────────────
 interface ExtraCard { file: string; name: string; interp: string; }
 interface CaseItem { question: string; answer: string; }
 interface SectionData {
@@ -403,13 +365,11 @@ interface SectionData {
   cases: CaseItem[];
   summary: string[];
 }
-
 function trimSentences(text: string, max: number): string {
   if (!text) return "";
   const sentences = text.match(/[^.。]+[.。]+/g) || [text];
   return sentences.slice(0, max).join("").trim();
 }
-
 function buildSectionHtml(
   chapterNum: number, chapterTitle: string,
   sec: SectionData,
@@ -421,33 +381,30 @@ function buildSectionHtml(
   const hd = `<div class="pg-hd"><span>마법의 금전백서 | 타로로 꿰뚫는 나의 금전 흐름</span><span>CH 0${chapterNum} · ${chapterTitle}</span></div>`;
   const safeTitle = sec.title.replace(/&/g, "&amp;");
   const badge = `<div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">Section</span></div><div class="sec-title">${safeTitle}</div><div class="sec-rule"></div>`;
-
+  // ── 수정 1,2번: 3카드/5카드 섹션 소제목 body 3문장, 나머지 2문장 ──
+  const subBodyMax = (sec.title.includes("3카드 스프레드") || sec.title.includes("5카드 스프레드")) ? 3 : 2;
   // 페이지 1
-  html += `<div class="pg">${hd}<div class="pg-body">${badge}<div class="card-callout"><div class="cc-img"><img src="${BASE_URL}/cards/${sec.cardFile}" alt="${sec.cardName}"><div class="cc-name">${sec.cardName}</div></div><div class="cc-body"><h4>💡 ${sec.cardName.replace(/\.+$/, "")}이 말하는 것</h4><p>${trimSentences(sec.cardDesc,6)}</p><span class="cc-tagline">${sec.cardTagline}</span></div></div>${sec.subheadings.slice(0,2).map(sh=>`<div class="sub-h">${sh.title.replace(/\.+$/, "")}</div><p class="body-p">${trimSentences(sh.body,2)}</p>`).join("")}</div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Money Guide</div></div></div>`;
-
+  html += `<div class="pg">${hd}<div class="pg-body">${badge}<div class="card-callout"><div class="cc-img"><img src="${BASE_URL}/cards/${sec.cardFile}" alt="${sec.cardName}"><div class="cc-name">${sec.cardName}</div></div><div class="cc-body"><h4>💡 ${sec.cardName.replace(/\.+$/, "")}이 말하는 것</h4><p>${trimSentences(sec.cardDesc,6)}</p><span class="cc-tagline">${sec.cardTagline}</span></div></div>${sec.subheadings.slice(0,2).map(sh=>`<div class="sub-h">${sh.title.replace(/\.+$/, "")}</div><p class="body-p">${trimSentences(sh.body,subBodyMax)}</p>`).join("")}</div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Money Guide</div></div></div>`;
   // 페이지 2
   const multiCardsHtml = extraCardFiles.length > 0
     ? `<div class="multi-cards">${extraCardFiles.map(c=>{const interp=sec.extraCards?.find(e=>e.file===c.file);return `<div class="mini-card"><img src="${BASE_URL}/cards/${c.file}" alt="${c.name}"><div class="mn">${c.name}</div><div class="mi">${trimSentences(interp?.interp??"",1)}</div></div>`;}).join("")}</div>`
     : "";
   html += `<div class="pg">${hd}<div class="pg-body">${badge}${multiCardsHtml}<div class="cmp-row"><div class="bad-box"><div class="box-title">✕ 이렇게 하면 안 돼요</div><ul>${sec.badExamples.slice(0,3).map(e=>`<li>${e}</li>`).join("")}</ul></div><div class="good-box"><div class="box-title">✓ 이렇게 해보세요</div><ul>${sec.goodExamples.slice(0,3).map(e=>`<li>${e}</li>`).join("")}</ul></div></div>${sec.subheadings[2]?`<div class="sub-h">${sec.subheadings[2].title.replace(/\.+$/, "")}</div><p class="body-p">${trimSentences(sec.subheadings[2].body,3)}</p>`:""}<div class="quote-box"><p>"${sec.quote}"</p></div></div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Money Guide</div></div></div>`;
-
   // 페이지 3
   html += `<div class="pg"><div class="pg-hd"><span>마법의 금전백서 | 타로로 꿰뚫는 나의 금전 흐름</span><span>CH 0${chapterNum} · 실전 정리</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 정리</span></div><div class="sec-title">${safeTitle}</div><div class="sec-rule"></div><table class="data-table"><thead><tr>${sec.tableHeaders.map(h=>`<th>${h.replace(/\.+$/, "")}</th>`).join("")}</tr></thead><tbody>${sec.tableRows.map(r=>`<tr><td>${r.col1.replace(/\.+$/, "")}</td><td>${r.col2.replace(/\.+$/, "")}</td><td>${r.col3.replace(/\.+$/, "")}</td></tr>`).join("")}</tbody></table><div class="div-rule"></div><div class="sub-h">🌹 핵심 정리</div><p class="body-p">${trimSentences(sec.subheadings[0]?.body??"",2)}</p><div class="tip-box"><div class="tip-title">Golden Tip</div><p>${trimSentences(sec.tip,2)}</p></div></div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Money Guide</div></div></div>`;
-
   // 페이지 4
   const secWithQuiz = sec as SectionData & { quiz?: { question: string; hint: string; answer: string } };
   const quizBlock = secWithQuiz.quiz
-    ? `<div class="quiz-box"><div class="quiz-title">🎯 실전 퀴즈</div><p class="quiz-q">${secWithQuiz.quiz.question}</p><p class="quiz-hint">${secWithQuiz.quiz.hint}</p><div class="quiz-answer-box"><div class="quiz-answer-label">정답 해설 ▼</div><p class="quiz-answer">${(sec.title.includes("5카드 스프레드") || sec.title.includes("부동산 및 큰 자산") ? trimSentences(secWithQuiz.quiz.answer,2) : trimSentences(secWithQuiz.quiz.answer,3))}</p></div></div>`
+    ? `<div class="quiz-box"><div class="quiz-title">🎯 실전 퀴즈</div><p class="quiz-q">${secWithQuiz.quiz.question}</p><p class="quiz-hint">${secWithQuiz.quiz.hint}</p><div class="quiz-answer-box"><div class="quiz-answer-label">정답 해설 ▼</div><p class="quiz-answer">${trimSentences(secWithQuiz.quiz.answer,3)}</p></div></div>`
     : "";
-  html += `<div class="pg"><div class="pg-hd"><span>마법의 금전백서 | 타로로 꿰뚫는 나의 금전 흐름</span><span>CH 0${chapterNum} · 실전 상담 케이스</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 상담 케이스</span></div><div class="sec-title">${safeTitle}</div><div class="sec-rule"></div>${sec.cases.slice(0,2).map((c,i)=>`<div class="case-box"><div class="case-title">💬 케이스 ${i+1}</div><p class="case-q">Q. ${c.question}</p><p class="case-a">A. ${(sec.title.includes("5카드 스프레드") ? trimSentences(c.answer,2) : trimSentences(c.answer,3))}</p></div>`).join("")}<div class="tip-box"><div class="tip-title">✦ 이 섹션 핵심 요약</div><p>${sec.summary.slice(0,2).join(" ")}</p></div>${quizBlock}</div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Money Guide</div></div></div>`;
-
+  // ── 수정 2번: 5카드 섹션만 케이스 1개 ──
+  const caseMax = sec.title.includes("5카드 스프레드") ? 1 : 2;
+  html += `<div class="pg"><div class="pg-hd"><span>마법의 금전백서 | 타로로 꿰뚫는 나의 금전 흐름</span><span>CH 0${chapterNum} · 실전 상담 케이스</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 상담 케이스</span></div><div class="sec-title">${safeTitle}</div><div class="sec-rule"></div>${sec.cases.slice(0,caseMax).map((c,i)=>`<div class="case-box"><div class="case-title">💬 케이스 ${i+1}</div><p class="case-q">Q. ${c.question}</p><p class="case-a">A. ${trimSentences(c.answer,3)}</p></div>`).join("")}<div class="tip-box"><div class="tip-title">✦ 이 섹션 핵심 요약</div><p>${sec.summary.slice(0,2).join(" ")}</p></div>${quizBlock}</div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Money Guide</div></div></div>`;
   return html;
 }
-
 function buildSummaryHtml(chapterNum: number, chapterTitle: string, summary: string[], quote: string, isLastChapter: boolean, pageNum: number): string {
   return `<div class="pg"><div class="pg-hd"><span>마법의 금전백서 | 타로로 꿰뚫는 나의 금전 흐름</span><span>CH 0${chapterNum} · 핵심 요약</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">✦</span><span class="sl">Summary</span></div><div class="sec-title">CHAPTER 0${chapterNum} 핵심 요약</div><div class="sec-rule"></div><div class="quote-box"><p>"${quote}"</p></div><ul class="summary-list">${summary.map(s=>`<li>${s}</li>`).join("")}</ul><div class="div-rule"></div><div class="tip-box"><div class="tip-title">${isLastChapter?"마치며":"다음 챕터 미리보기"}</div><p>${isLastChapter?"이 책을 통해 타로는 단순한 점술이 아닌, 나 자신의 금전 흐름을 깊이 이해하는 도구임을 깨달으셨기를 바랍니다. 이제 어떤 금전 상담도 자신 있게 리딩할 수 있습니다.":`CHAPTER 0${chapterNum+1}에서는 더 깊은 실전 리딩 기술을 배웁니다. 지금까지 배운 카드 해석을 바탕으로 실제 상황에 바로 적용할 수 있는 스프레드와 케이스를 함께 알아볼게요.`}</p></div></div><div class="pg-ft"><div class="pn">${pageNum}</div><div class="pt">Tarot Money Guide</div></div></div>`;
 }
-
 function buildOpenerPrompt(chapterNum: number, chapterTitle: string, sections: {title:string}[]): string {
   return `타로 전자책 작가입니다. 챕터 오프너 설명을 JSON으로만 작성하세요.
 챕터 ${chapterNum}: ${chapterTitle}
@@ -455,21 +412,37 @@ function buildOpenerPrompt(chapterNum: number, chapterTitle: string, sections: {
 {"chapterDesc":"이 챕터를 읽어야 하는 이유를 흥미롭고 공감되게 2~3문장으로. 금전/재테크 관점으로. 반드시 마침표로 완전하게 끝낼 것."}
 JSON만 출력.`;
 }
-
 function buildSectionPrompt(
   chapterNum: number, chapterTitle: string,
   section: { title: string; card: string; cardName: string; extraCards: { file: string; name: string }[] },
   si: number
 ): string {
   const extraList = section.extraCards.map(c=>`- ${c.name} (${c.file})`).join("\n");
-
   if (chapterNum === 3) {
+    const is3card = section.title.includes("3카드 스프레드");
+    const is5card = section.title.includes("5카드 스프레드");
+    const sub1Body = is3card
+      ? "2~3문장. 과거/현재/미래 3개 위치를 카드명 명시하며 전체를 하나의 흐름으로 통합 설명. 각 위치를 따로 나열하지 말고 압축하되 미래 위치까지 빠짐없이 포함. 반드시 존댓말로, 마침표로 끝낼 것."
+      : is5card
+      ? "2~3문장. 상황/원인/장애/조언/결과 5개 위치를 카드명 명시하며 전체를 하나의 흐름으로 통합 설명. 각 위치를 따로 나열하지 말고 압축하되 결과 위치까지 빠짐없이 포함. 반드시 존댓말로, 마침표로 끝낼 것."
+      : "5~6문장. 금전 리딩에서 통용되는 위치/조합 해석 원칙. 반드시 마침표로 끝낼 것.";
+    const sub2Body = is3card
+      ? "2~3문장. 과거/현재/미래 위치에 각 원소 카드가 올 때를 카드명 명시하며 하나의 흐름으로 통합 설명. 미래 위치까지 빠짐없이 포함. 절대 이 카드 라고만 쓰지 말 것. 반드시 마침표로 끝낼 것."
+      : is5card
+      ? "2~3문장. 상황/원인/장애/조언/결과 위치에 각 원소 카드가 올 때를 카드명 명시하며 하나의 흐름으로 통합 설명. 결과 위치까지 빠짐없이 포함. 절대 이 카드 라고만 쓰지 말 것. 반드시 마침표로 끝낼 것."
+      : "반드시 카드 이름을 3가지 이상 명시하며 컵/완드/검/펜타클 각 원소별로 금전 위치에 오면 어떻게 해석하는지 구체적으로 설명할 것. 예: 펜타클 9가 미래 위치에 오면~, 완드 8이 조언 위치에 오면~ 식으로. 절대 이 카드 라고만 쓰지 말 것. 5~6문장. 반드시 마침표로 끝낼 것.";
+    const casesPrompt = is5card
+      ? `{"question": "5카드 스프레드(상황/원인/장애/조언/결과) 실제 금전 상담 질문 1개. 구체적인 금전 고민 상황 포함", "answer": "2문장. 카드를 하나씩 나열하지 말고 상황/원인/장애/조언/결과 전체를 하나의 흐름으로 통합 해석. 모든 카드와 결론까지 반드시 포함. 반드시 존댓말로, 마침표로 끝낼 것"}`
+      : `{"question": "\${section.title} 관련 실제 금전 상담에서 자주 나오는 질문 1. 구체적 금전 고민 상황 포함. 카드 3장 이상 배열 사용. 다른 케이스와 완전히 다른 상황으로", "answer": "존댓말로 4~5문장. 반드시 구체적인 카드명을 언급하며 위치/조합 원칙 적용한 풍부한 해석. 반드시 마침표로 끝낼 것"},
+    {"question": "\${section.title} 관련 실제 금전 상담에서 자주 나오는 질문 2. 앞의 질문과 완전히 다른 금전 상황으로", "answer": "존댓말로 4~5문장. 반드시 구체적인 카드명을 언급하며 위치/조합 원칙 적용한 풍부한 해석. 반드시 마침표로 끝낼 것"},
+    {"question": "\${section.title} 관련 실제 금전 상담에서 자주 나오는 질문 3. 앞의 두 질문과 완전히 다른 금전 상황으로", "answer": "존댓말로 4~5문장. 반드시 구체적인 카드명을 언급하며 위치/조합 원칙 적용한 풍부한 해석. 반드시 마침표로 끝낼 것"}`;
+    const quizAnswer = is5card
+      ? "2문장. 카드를 하나씩 나열하지 말고 전체 배열을 하나의 흐름으로 통합 해석. 모든 카드와 결론까지 반드시 포함. 반드시 존댓말로, 마침표로 끝낼 것."
+      : "정답 해설: 위치별 원칙과 카드 의미를 조합한 완전한 해석. 반드시 마침표로 끝낼 것.";
     return `타로 전자책 전문 작가입니다. 섹션 1개의 내용을 JSON으로만 작성하세요. JSON 외 텍스트 절대 금지.
-
 챕터 3: ${chapterTitle}
 섹션 ${si+1}: ${section.title}
 참고 카드: ${section.cardName} (${section.card}), ${extraList}
-
 핵심 지시:
 - 금전/재테크 리딩 관점으로 작성할 것. 반드시 마침표로 끝낼 것.
 - 어떤 카드가 나와도 적용할 수 있는 보편적 원칙을 가르칠 것.
@@ -478,8 +451,6 @@ function buildSectionPrompt(
 - 카드 이름은 반드시 한국어로 작성할 것. 영어 카드명 절대 금지.
 - 카드 한국어명 주의: 여황제→여황제, 매달린 사람→매달린 사람, 검 킹→검 킹, The Fool→바보, The Hermit→은둔자, Wheel of Fortune→운명의 수레바퀴로 작성할 것.
 - 케이스와 퀴즈는 반드시 금전·재테크에 관한 내용으로만 작성할 것. 연애·자아성찰 내용 절대 금지.
-- 카드 이름 표기: 매달린 사람(매달린 사람 금지), 운명의 수레바퀴, 힘, 달, 태양, 별, 심판, 세계 등 반드시 한국어로 작성.
-
 {
   "title": "${section.title}",
   "cardFile": "${section.card}",
@@ -487,8 +458,8 @@ function buildSectionPrompt(
   "cardDesc": "이 섹션 주제(${section.title})를 한눈에 설명하는 7~8문장. 금전 리딩 핵심 의미와 실제 금전 상황 예시 포함. 독자가 바로 공감할 수 있게 구체적으로. 반드시 존댓말로, 마침표로 끝낼 것.",
   "cardTagline": "이 섹션의 핵심 원칙 한 줄.",
   "subheadings": [
-    {"title": "🔮 소제목1 — 원칙 설명", "body": "5~6문장. 금전 리딩에서 통용되는 위치/조합 해석 원칙. 반드시 마침표로 끝낼 것."},
-    {"title": "💡 소제목2 — 원소별 적용", "body": "반드시 카드 이름을 3가지 이상 명시하며 컵/완드/검/펜타클 각 원소별로 금전 위치에 오면 어떻게 해석하는지 구체적으로 설명할 것. 예: 펜타클 9가 미래 위치에 오면~, 완드 8이 조언 위치에 오면~ 식으로. 절대 이 카드 라고만 쓰지 말 것. 5~6문장. 반드시 마침표로 끝낼 것."},
+    {"title": "🔮 소제목1 — 원칙 설명", "body": "${sub1Body}"},
+    {"title": "💡 소제목2 — 원소별 적용", "body": "${sub2Body}"},
     {"title": "💬 소제목3 — 실전 적용법", "body": "5~6문장. 실제 금전 리딩에서 이 원칙을 어떻게 적용하는지. 반드시 카드 이름(예: 펜타클 9, 탑, 달 등)을 명시하며 그 카드가 나왔을 때 어떻게 해석하는지 설명할 것. 절대 이 카드 라고만 쓰지 말 것. 반드시 마침표로 끝낼 것."}
   ],
   "extraCards": [
@@ -507,27 +478,26 @@ function buildSectionPrompt(
   "quote": "금전 위치/조합 해석의 핵심 원칙을 존댓말로 한 문장",
   "tip": "존댓말로 4~5문장. 어떤 카드가 나와도 바로 적용할 수 있는 금전 리딩 팁. 반드시 마침표로 끝낼 것",
   "cases": [
-    {"question": "${section.title} 관련 실제 금전 상담에서 자주 나오는 질문 1. 구체적 금전 고민 상황 포함. 카드 3장 이상 배열 사용. 다른 케이스와 완전히 다른 상황으로", "answer": "존댓말로 4~5문장. 반드시 구체적인 카드명을 언급하며 위치/조합 원칙 적용한 풍부한 해석. 반드시 마침표로 끝낼 것"},
-    {"question": "${section.title} 관련 실제 금전 상담에서 자주 나오는 질문 2. 앞의 질문과 완전히 다른 금전 상황으로", "answer": "존댓말로 4~5문장. 반드시 구체적인 카드명을 언급하며 위치/조합 원칙 적용한 풍부한 해석. 반드시 마침표로 끝낼 것"},
-    {"question": "${section.title} 관련 실제 금전 상담에서 자주 나오는 질문 3. 앞의 두 질문과 완전히 다른 금전 상황으로", "answer": "존댓말로 4~5문장. 반드시 구체적인 카드명을 언급하며 위치/조합 원칙 적용한 풍부한 해석. 반드시 마침표로 끝낼 것"}
+    ${casesPrompt}
   ],
   "quiz": {
     "question": "연습 퀴즈: 아래 금전 배열이 나왔을 때 어떻게 해석할까요? (카드 3장 위치 제시)",
     "hint": "힌트: 챕터 1에서 배운 카드 의미와 이 섹션의 원칙을 함께 적용해보세요.",
-    "answer": "정답 해설: 위치별 원칙과 카드 의미를 조합한 완전한 해석. 반드시 마침표로 끝낼 것."
+    "answer": "${quizAnswer}"
   },
   "summary": ["핵심 원칙 요약 1","핵심 원칙 요약 2","핵심 원칙 요약 3","핵심 원칙 요약 4"]
 }
 JSON만 출력.`;
   }
-
   if (chapterNum === 4 || chapterNum === 5) {
+    const needsIntegrated = ["부채 및 빚","사업 운","부동산 및 큰 자산","금전 고민별 추천 스프레드"].some(t=>section.title.includes(t));
+    const quizAnswer = needsIntegrated
+      ? "2문장. 카드를 하나씩 나열하지 말고 전체 배열을 하나의 흐름으로 통합 해석. 모든 카드와 결론까지 반드시 포함. 반드시 존댓말로, 마침표로 끝낼 것."
+      : "✅ 정답 해설: 각 위치의 카드 의미를 단계별로 풍부하게 설명하는 5~6문장. 반드시 마침표로 끝낼 것.";
     return `타로 전자책 전문 작가입니다. 섹션 1개의 내용을 JSON으로만 작성하세요. JSON 외 텍스트 절대 금지.
-
 챕터 ${chapterNum}: ${chapterTitle}
 섹션 ${si+1}: ${section.title}
 대표 카드: ${section.cardName} (${section.card}), ${extraList}
-
 핵심 지시:
 - 금전/재테크 리딩 관점으로 작성할 것. 반드시 마침표로 끝낼 것.
 - 이 상황(${section.title})에서 자주 나오는 카드 5~6가지를 다양하게 다룰 것.
@@ -537,8 +507,6 @@ JSON만 출력.`;
 - 카드 이름은 반드시 한국어로 작성할 것. 영어 카드명 절대 금지.
 - 카드 한국어명 주의: 여황제→여황제, 매달린 사람→매달린 사람, 검 킹→검 킹, The Fool→바보, The Hermit→은둔자, Wheel of Fortune→운명의 수레바퀴로 작성할 것.
 - 케이스와 퀴즈는 반드시 금전·재테크에 관한 내용으로만 작성할 것. 연애·자아성찰 내용 절대 금지.
-- 카드 이름 표기: 매달린 사람(매달린 사람 금지), 운명의 수레바퀴, 힘, 달, 태양, 별, 심판, 세계 등 반드시 한국어로 작성.
-
 {
   "title": "${section.title}",
   "cardFile": "${section.card}",
@@ -573,28 +541,24 @@ JSON만 출력.`;
   "quiz": {
     "question": "🎯 실전 퀴즈: 아래 금전 배열이 나왔을 때 어떻게 해석할까요? 1번: [카드명] / 2번: [카드명] / 3번: [카드명] — 구체적인 카드 3~5장으로 실제 배열을 만들어 제시할 것.",
     "hint": "💭 힌트: 챕터 1의 카드 의미 + 챕터 3의 위치 원칙을 함께 적용해보세요.",
-    "answer": "✅ 정답 해설: 각 위치의 카드 의미를 단계별로 풍부하게 설명하는 5~6문장. 반드시 마침표로 끝낼 것."
+    "answer": "${quizAnswer}"
   },
   "summary": ["핵심 요약 1","핵심 요약 2","핵심 요약 3","핵심 요약 4"]
 }
 JSON만 출력.`;
   }
-
-  // 챕터 2
+  // 챕터 2 — 원본 그대로
   return `JSON만 출력. 다른 텍스트 금지. 모든 값 반드시 마침표로 끝낼 것.
 반드시 금전·재테크·투자에 관한 내용으로만 작성할 것. 연애·자아성찰 내용 절대 금지.
 반드시 존댓말(~해요, ~입니다, ~이에요)로만 작성할 것. 반말, 단답형 절대 금지.
 카드 이름은 반드시 한국어로 작성할 것. 영어 카드명 절대 금지.
 섹션: ${section.title} / 카드: ${section.cardName}
-
 {"title":"${section.title}","cardFile":"${section.card}","cardName":"${section.cardName}","cardDesc":"7~8문장. 이 카드의 금전 핵심 의미. 정방향과 역방향, 실제 금전 상황 예시, 독자가 바로 공감할 수 있는 구체적 내용 포함. 반드시 존댓말로, 마침표로 끝낼 것.","cardTagline":"이 카드의 금전 핵심 메시지 한 줄.","subheadings":[{"title":"🔮 소제목1","body":"5~6문장. 이 섹션 주제 관련 핵심 금전 내용을 구체적으로. 반드시 카드 이름을 명시하며 예시를 들 것. 절대 이 카드 라고만 쓰지 말 것. 반드시 존댓말로, 마침표로 끝낼 것."},{"title":"💡 소제목2","body":"5~6문장. 실전 금전 적용법을 구체적으로. 반드시 카드 이름을 명시하며 그 카드가 나왔을 때 어떻게 활용하는지 설명할 것. 절대 이 카드 라고만 쓰지 말 것. 반드시 존댓말로, 마침표로 끝낼 것."},{"title":"💬 소제목3","body":"5~6문장. 실제 금전 예시와 함께 설명. 반드시 카드 이름(예: 펜타클 10, 태양, 달 등)을 명시하며 그 카드가 어떤 의미인지 설명하고 나서 예시를 들 것. 절대 이 카드 라고만 쓰지 말 것. 반드시 존댓말로, 마침표로 끝낼 것."}],"extraCards":[${section.extraCards.map(c=>`{"file":"${c.file}","name":"${c.name}","interp":"금전 리딩에서 한 줄 의미. 존댓말로"}`).join(",")}],"badExamples":["잘못된 금전 해석 구체적 예시 1","잘못된 금전 해석 구체적 예시 2","잘못된 금전 해석 구체적 예시 3","잘못된 금전 해석 구체적 예시 4"],"goodExamples":["올바른 금전 해석 구체적 예시 1","올바른 금전 해석 구체적 예시 2","올바른 금전 해석 구체적 예시 3","올바른 금전 해석 구체적 예시 4"],"tableHeaders":["금전 상황","정방향 의미","역방향 의미"],"tableRows":[{"col1":"구체적 금전 상황 1","col2":"정방향일 때 금전 의미","col3":"역방향일 때 금전 의미"},{"col1":"구체적 금전 상황 2","col2":"정방향일 때 금전 의미","col3":"역방향일 때 금전 의미"},{"col1":"구체적 금전 상황 3","col2":"정방향일 때 금전 의미","col3":"역방향일 때 금전 의미"},{"col1":"구체적 금전 상황 4","col2":"정방향일 때 금전 의미","col3":"역방향일 때 금전 의미"},{"col1":"구체적 금전 상황 5","col2":"정방향일 때 금전 의미","col3":"역방향일 때 금전 의미"}],"quote":"금전 리딩 핵심 명언을 존댓말로 한 문장","tip":"실전 금전 리딩 팁을 존댓말로 2문장","cases":[{"question":"${section.title}와 관련된 실제 금전 상담에서 자주 나오는 질문 1. 반드시 실제 금전 고민 상황(투자·수입·지출·사업 등)으로 카드 해석이 포함된 질문. 다른 케이스와 완전히 다른 상황으로.","answer":"존댓말로 3~4문장. 구체적인 카드 해석 포함. 반드시 마침표로 끝낼 것"},{"question":"${section.title}와 관련된 실제 금전 상담에서 자주 나오는 질문 2. 앞의 질문과 완전히 다른 금전 상황으로.","answer":"존댓말로 3~4문장. 구체적인 카드 해석 포함. 반드시 마침표로 끝낼 것"},{"question":"${section.title}와 관련된 실제 금전 상담에서 자주 나오는 질문 3. 앞의 두 질문과 완전히 다른 금전 상황으로.","answer":"존댓말로 3~4문장. 구체적인 카드 해석 포함. 반드시 마침표로 끝낼 것"}],"quiz":{"question":"🎯 금전 퀴즈: 카드 3장 금전 배열을 제시할 것","hint":"존댓말로 힌트 한 줄","answer":"존댓말로 해설 2문장"},"summary":["존댓말로 핵심 요약 1","존댓말로 핵심 요약 2","존댓말로 핵심 요약 3","존댓말로 핵심 요약 4"]}`;
 }
-
 // ── API Route ──────────────────────────────────────────
 export async function POST(req: NextRequest) {
   try {
     const { chapterIndex, sectionIndex, startPage = 1 } = await req.json();
-
     if (chapterIndex === 0) {
       if (sectionIndex === -1) {
         const coverHtml = buildCoverHtml();
@@ -608,7 +572,6 @@ export async function POST(req: NextRequest) {
           nextStartPage: startPage + 1,
         });
       }
-
       if (sectionIndex < MAJOR_PAGES.length) {
         const page = MAJOR_PAGES[sectionIndex];
         const msg = await client.messages.create({
@@ -627,7 +590,6 @@ export async function POST(req: NextRequest) {
           nextStartPage: startPage + 1,
         });
       }
-
       const minorIdx = sectionIndex - MAJOR_PAGES.length;
       const page = MINOR_PAGES[minorIdx];
       const msg = await client.messages.create({
@@ -646,15 +608,12 @@ export async function POST(req: NextRequest) {
         nextStartPage: startPage + 1,
       });
     }
-
     const chIdx = chapterIndex - 1;
     if (chIdx < 0 || chIdx >= CHAPTERS.length) {
       return NextResponse.json({ error: "올바른 챕터 번호를 입력해주세요." }, { status: 400 });
     }
-
     const chapter = CHAPTERS[chIdx];
     const isLastChapter = chIdx === CHAPTERS.length - 1;
-
     if (sectionIndex === -1) {
       const msg = await client.messages.create({
         model: "claude-opus-4-5",
@@ -673,10 +632,8 @@ export async function POST(req: NextRequest) {
         nextStartPage: startPage + 1,
       });
     }
-
     const section = chapter.sections[sectionIndex];
     if (!section) return NextResponse.json({ error: "섹션을 찾을 수 없습니다." }, { status: 400 });
-
     const msg = await client.messages.create({
       model: "claude-opus-4-5",
       max_tokens: chapter.number === 2 ? 12000 : 16000,
@@ -685,7 +642,6 @@ export async function POST(req: NextRequest) {
     const raw = msg.content[0];
     if (raw.type !== "text") throw new Error("응답 없음");
     let jsonStr = raw.text.trim().replace(/```json\n?/g,"").replace(/```\n?/g,"").trim();
-
     let secData: SectionData;
     try { secData = JSON.parse(jsonStr); }
     catch {
@@ -700,19 +656,16 @@ export async function POST(req: NextRequest) {
       try { secData = JSON.parse(retryJsonStr); }
       catch { return NextResponse.json({ error: "JSON 파싱 실패 (재시도 후): " + retryJsonStr.substring(0,200) }, { status: 500 }); }
     }
-
     const isLastSection = sectionIndex === chapter.sections.length - 1;
     const sectionHtml = buildSectionHtml(chapter.number, chapter.title, secData, section.extraCards, sectionIndex, startPage);
     const summaryHtml = isLastSection
       ? buildSummaryHtml(chapter.number, chapter.title, secData.summary, secData.quote, isLastChapter, startPage + 4)
       : "";
-
     return NextResponse.json({
       html: sectionHtml + summaryHtml,
       chapterIndex, sectionIndex, isLastSection,
       nextStartPage: startPage + 4 + (isLastSection ? 1 : 0),
     });
-
   } catch (error) {
     console.error("오류:", error);
     return NextResponse.json({ error: "생성 중 오류 발생" }, { status: 500 });
