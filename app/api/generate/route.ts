@@ -308,12 +308,12 @@ function buildSectionHtml(chapterNum: number, chapterTitle: string, sec: Section
     ? `<div class="multi-cards">${extraCardFiles.map(c=>{const interp=sec.extraCards?.find(e=>e.file===c.file);return `<div class="mini-card"><img src="${BASE_URL}/cards/${c.file}" alt="${c.name}"><div class="mn">${c.name}</div><div class="mi">${trimSentences(interp?.interp??"",1)}</div></div>`;}).join("")}</div>`
     : "";
   html += `<div class="pg">${hd}<div class="pg-body">${badge}${multiCardsHtml}<div class="cmp-row"><div class="bad-box"><div class="box-title">✕ 이렇게 하면 안 돼요</div><ul>${sec.badExamples.slice(0,3).map(e=>`<li>${e}</li>`).join("")}</ul></div><div class="good-box"><div class="box-title">✓ 이렇게 해보세요</div><ul>${sec.goodExamples.slice(0,3).map(e=>`<li>${e}</li>`).join("")}</ul></div></div>${sec.subheadings[2]?`<div class="sub-h">${sec.subheadings[2].title.replace(/\.+$/, "")}</div><p class="body-p">${trimSentences(sec.subheadings[2].body,2)}</p>`:""}<div class="quote-box"><p>"${sec.quote}"</p></div></div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
-  html += `<div class="pg"><div class="pg-hd"><span>마법의 연애백서 | 타로로 꿰뚫는 상대의 속마음</span><span>CH 0${chapterNum} · 실전 정리</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 정리</span></div><div class="sec-title">${safeTitle}</div><div class="sec-rule"></div><table class="data-table"><thead><tr>${sec.tableHeaders.map(h=>`<th>${h.replace(/\.+$/, "")}</th>`).join("")}</tr></thead><tbody>${sec.tableRows.map(r=>`<tr><td>${r.col1.replace(/\.+$/, "")}</td><td>${r.col2.replace(/\.+$/, "")}</td><td>${r.col3.replace(/\.+$/, "")}</td></tr>`).join("")}</tbody></table><div class="div-rule"></div><div class="sub-h">🌹 핵심 정리</div><p class="body-p">${trimSentences(sec.subheadings[0]?.body??"",2)}</p><div class="tip-box"><div class="tip-title">Golden Tip</div><p>${trimSentences(sec.tip,2)}</p></div></div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
+  html += `<div class="pg"><div class="pg-hd"><span>마법의 연애백서 | 타로로 꿰뚫는 상대의 속마음</span><span>CH 0${chapterNum} · 실전 정리</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 정리</span></div><div class="sec-title">${safeTitle}</div><div class="sec-rule"></div><table class="data-table"><thead><tr>${sec.tableHeaders.map(h=>`<th>${h.replace(/\.+$/, "")}</th>`).join("")}</tr></thead><tbody>${sec.tableRows.map(r=>`<tr><td>${r.col1.replace(/\.+$/, "")}</td><td>${r.col2.replace(/\.+$/, "")}</td><td>${r.col3.replace(/\.+$/, "")}</td></tr>`).join("")}</tbody></table><div class="div-rule"></div><div class="sub-h">🌹 핵심 정리</div><p class="body-p">${trimSentences(sec.subheadings[0]?.body??"",2)}</p><div class="tip-box"><div class="tip-title">Golden Tip</div><p>${trimSentences(sec.tip,1)}</p></div></div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
   const secWithQuiz = sec as SectionData & { quiz?: { question: string; hint: string; answer: string } };
   const quizBlock = secWithQuiz.quiz
     ? `<div class="quiz-box"><div class="quiz-title">🎯 실전 퀴즈</div><p class="quiz-q">${secWithQuiz.quiz.question}</p><p class="quiz-hint">${secWithQuiz.quiz.hint}</p><div class="quiz-answer-box"><div class="quiz-answer-label">정답 해설 ▼</div><p class="quiz-answer">${trimSentences(secWithQuiz.quiz.answer,2)}</p></div></div>`
     : "";
-  html += `<div class="pg"><div class="pg-hd"><span>마법의 연애백서 | 타로로 꿰뚫는 상대의 속마음</span><span>CH 0${chapterNum} · 실전 상담 케이스</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 상담 케이스</span></div><div class="sec-title">${safeTitle}</div><div class="sec-rule"></div>${sec.cases.slice(0,2).map((c,i)=>`<div class="case-box"><div class="case-title">💬 케이스 ${i+1}</div><p class="case-q">Q. ${c.question}</p><p class="case-a">A. ${trimSentences(c.answer,2)}</p></div>`).join("")}<div class="tip-box"><div class="tip-title">✦ 이 섹션 핵심 요약</div><p>${sec.summary.slice(0,2).join(" ")}</p></div>${quizBlock}</div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
+  html += `<div class="pg"><div class="pg-hd"><span>마법의 연애백서 | 타로로 꿰뚫는 상대의 속마음</span><span>CH 0${chapterNum} · 실전 상담 케이스</span></div><div class="pg-body"><div class="sec-badge"><span class="sn">0${si+1}</span><span class="sl">실전 상담 케이스</span></div><div class="sec-title">${safeTitle}</div><div class="sec-rule"></div>${sec.cases.slice(0,2).map((c,i)=>`<div class="case-box"><div class="case-title">💬 케이스 ${i+1}</div><p class="case-q">Q. ${c.question}</p><p class="case-a">A. ${trimSentences(c.answer,2)}</p></div>`).join("")}<div class="tip-box"><div class="tip-title">✦ 이 섹션 핵심 요약</div><p>${sec.summary.slice(0,1).join(" ")}</p></div>${quizBlock}</div><div class="pg-ft"><div class="pn">${pg++}</div><div class="pt">Tarot Love Guide</div></div></div>`;
   return html;
 }
 function buildSummaryHtml(chapterNum: number, chapterTitle: string, summary: string[], quote: string, isLastChapter: boolean, pageNum: number): string {
@@ -366,7 +366,7 @@ function buildSectionPrompt(chapterNum: number, chapterTitle: string, section: {
   "title": "${section.title}",
   "cardFile": "${section.card}",
   "cardName": "${section.cardName}",
-  "cardDesc": "이 섹션 주제(${section.title})를 한눈에 설명하는 7~8문장. 특정 카드가 아닌 위치/조합 원칙 전체를 소개. 반드시 존댓말로, 마침표로 끝낼 것.",
+  "cardDesc": "이 섹션 주제(${section.title})를 한눈에 설명하는 4~5문장. 위치/조합 원칙 핵심만 압축 소개. 반드시 존댓말로, 마침표로 끝낼 것.",
   "cardTagline": "이 섹션의 핵심 원칙 한 줄.",
   "subheadings": [
     {"title": "🔮 소제목1 — 원칙 설명", "body": "${sub1Body}"},
@@ -387,12 +387,12 @@ function buildSectionPrompt(chapterNum: number, chapterTitle: string, section: {
     {"col1":"구체적 위치/상황 5","col2":"해석 원칙 설명 5","col3":"주의할 점 5"}
   ],
   "quote": "위치/조합 해석의 핵심 원칙을 존댓말로 한 문장",
-  "tip": "4~5문장. 어떤 카드가 나와도 바로 적용할 수 있는 구체적인 연애 리딩 팁. 반드시 마침표로 끝낼 것.",
+  "tip": "2문장. 어떤 카드가 나와도 바로 적용할 수 있는 연애 리딩 팁을 압축. 반드시 마침표로 끝낼 것.",
   "cases": [
     ${casesPrompt}
   ],
   "quiz": {
-    "question": "연습 퀴즈: 아래 배열이 나왔을 때 어떻게 해석할까요? (카드 3장의 이름과 위치 제시. 구체적인 배열 예시)",
+    "question": "연습 퀴즈: [구체적 연애 고민 상황 한 줄] → [카드1/카드2/카드3 나왔을 때] 어떻게 해석할까요? (카드명과 위치 포함, 1~2줄 이내로 짧게)",
     "hint": "힌트: 챕터 1에서 배운 카드 의미와 이 섹션의 원칙을 함께 적용해보세요.",
     "answer": "${INTEGRATED_QUIZ}"
   },
@@ -418,7 +418,7 @@ JSON만 출력.`;
   "title": "${section.title}",
   "cardFile": "${section.card}",
   "cardName": "${section.cardName}",
-  "cardDesc": "이 상황(${section.title})의 타로 리딩 포인트 5~6문장. 어떤 카드가 나올 수 있는지 전반적으로 소개. 반드시 존댓말로, 마침표로 끝낼 것.",
+  "cardDesc": "이 상황(${section.title})의 타로 리딩 포인트 3~4문장. 어떤 카드가 나올 수 있는지 압축 소개. 반드시 존댓말로, 마침표로 끝낼 것.",
   "cardTagline": "이 상황 리딩의 핵심 포인트 한 줄.",
   "subheadings": [
     {"title": "🔮 소제목1 — 이 상황에서 자주 나오는 카드들", "body": "2문장. 이 연애 상황에서 긍정 신호 카드들과 주의 신호 카드들을 한국어 카드명으로 빠짐없이 나열하며 하나의 흐름으로 압축 해석. 영어 카드명 절대 금지. 반드시 존댓말로, 마침표로 끝낼 것."},
@@ -439,14 +439,14 @@ JSON만 출력.`;
     {"col1":"카드5 (구체적 카드명)","col2":"이 상황에서 의미5","col3":"조언5"}
   ],
   "quote": "이 연애 상황 리딩의 핵심 메시지 한 문장.",
-  "tip": "4~5문장. 이 연애 상황 리딩에서 바로 쓸 수 있는 구체적인 팁. 반드시 마침표로 끝낼 것.",
+  "tip": "2문장. 이 연애 상황 리딩에서 바로 쓸 수 있는 팁을 압축. 반드시 마침표로 끝낼 것.",
   "cases": [
     {"question": "${section.title} 관련 실제 연애 상담에서 자주 나오는 질문 1. 구체적이고 현실적인 연애 고민 상황 포함. 다른 케이스와 완전히 다른 상황으로", "answer": "3문장. 이 섹션 주제에서 다루는 내용(원소/카드/위치 등) 빠짐없이 압축. 반드시 구체적인 카드명 언급. 반드시 존댓말로, 마침표로 끝낼 것"},
     {"question": "${section.title} 관련 실제 연애 상담에서 자주 나오는 질문 2. 앞의 질문과 완전히 다른 연애 상황으로", "answer": "3문장. 이 섹션 주제에서 다루는 내용(원소/카드/위치 등) 빠짐없이 압축. 반드시 구체적인 카드명 언급. 반드시 존댓말로, 마침표로 끝낼 것"},
     {"question": "${section.title} 관련 실제 연애 상담에서 자주 나오는 질문 3. 앞의 두 질문과 완전히 다른 연애 상황으로", "answer": "3문장. 이 섹션 주제에서 다루는 내용(원소/카드/위치 등) 빠짐없이 압축. 반드시 구체적인 카드명 언급. 반드시 존댓말로, 마침표로 끝낼 것"}
   ],
   "quiz": {
-    "question": "🎯 실전 퀴즈: 아래 연애 배열이 나왔을 때 어떻게 해석할까요? 반드시 연애·관계 상황으로 퀴즈를 만들 것. 1번 위치: [카드명] / 2번 위치: [카드명] / 3번 위치: [카드명] — 구체적인 카드 3~5장으로 실제 배열을 만들어 제시할 것.",
+    "question": "🎯 실전 퀴즈: [구체적 연애 고민 상황 한 줄] → 1번:[카드명] / 2번:[카드명] / 3번:[카드명] 나왔을 때 어떻게 해석할까요? (1~2줄 이내로 짧게)",
     "hint": "💭 힌트: 챕터 1의 카드 의미 + 챕터 3의 위치 원칙을 함께 적용해보세요.",
     "answer": "${INTEGRATED_QUIZ}"
   },
@@ -459,7 +459,7 @@ JSON만 출력.`;
 반드시 존댓말(~해요, ~입니다, ~이에요)로만 작성할 것. 반말, 단답형 절대 금지.
 카드 이름은 반드시 한국어로 작성할 것. 영어 카드명 절대 금지.
 섹션: ${section.title} / 카드: ${section.cardName}
-{"title":"${section.title}","cardFile":"${section.card}","cardName":"${section.cardName}","cardDesc":"7~8문장. 이 카드의 연애 핵심 의미. 정방향과 역방향, 실제 연애 예시, 독자가 바로 공감할 수 있는 구체적 내용 포함. 반드시 존댓말로, 마침표로 끝낼 것.","cardTagline":"이 카드의 연애 핵심 메시지 한 줄.","subheadings":[{"title":"🔮 소제목1","body":"2문장. 이 소제목에서 다루는 핵심 연애 내용을 빠짐없이 압축. 반드시 카드 이름을 명시하며 예시를 들 것. 절대 이 카드 라고만 쓰지 말 것. 반드시 존댓말로, 마침표로 끝낼 것."},{"title":"💡 소제목2","body":"2문장. 이 소제목에서 다루는 실전 연애 적용법을 빠짐없이 압축. 반드시 카드 이름을 명시하며 그 카드가 나왔을 때 어떻게 활용하는지 설명할 것. 절대 이 카드 라고만 쓰지 말 것. 반드시 존댓말로, 마침표로 끝낼 것."},{"title":"💬 소제목3","body":"2문장. 이 소제목에서 다루는 연애 예시를 빠짐없이 압축. 반드시 카드 이름을 명시하며 그 카드가 어떤 의미인지 설명하고 나서 예시를 들 것. 절대 이 카드 라고만 쓰지 말 것. 반드시 존댓말로, 마침표로 끝낼 것. 절대 빈칸으로 두지 말 것."}],"extraCards":[${section.extraCards.map(c=>`{"file":"${c.file}","name":"${c.name}","interp":"연애 리딩에서 한 줄 의미. 존댓말로."}`).join(",")}],"badExamples":["잘못된 연애 해석 구체적 예시 1","잘못된 연애 해석 구체적 예시 2","잘못된 연애 해석 구체적 예시 3","잘못된 연애 해석 구체적 예시 4"],"goodExamples":["올바른 연애 해석 구체적 예시 1","올바른 연애 해석 구체적 예시 2","올바른 연애 해석 구체적 예시 3","올바른 연애 해석 구체적 예시 4"],"tableHeaders":["연애 상황","정방향 의미","역방향 의미"],"tableRows":[{"col1":"구체적 연애 상황 1","col2":"정방향일 때 연애 의미","col3":"역방향일 때 연애 의미"},{"col1":"구체적 연애 상황 2","col2":"정방향일 때 연애 의미","col3":"역방향일 때 연애 의미"},{"col1":"구체적 연애 상황 3","col2":"정방향일 때 연애 의미","col3":"역방향일 때 연애 의미"},{"col1":"구체적 연애 상황 4","col2":"정방향일 때 연애 의미","col3":"역방향일 때 연애 의미"},{"col1":"구체적 연애 상황 5","col2":"정방향일 때 연애 의미","col3":"역방향일 때 연애 의미"}],"quote":"연애 리딩 핵심 명언을 존댓말로 한 문장","tip":"실전 연애 리딩 팁을 존댓말로 2문장","cases":[{"question":"${section.title}와 관련된 실제 연애 상담에서 자주 나오는 질문 1. 반드시 실제 연애 고민 상황으로 카드 해석이 포함된 질문. 다른 케이스와 완전히 다른 상황으로.","answer":"존댓말로 3~4문장. 구체적인 카드 해석 포함. 반드시 마침표로 끝낼 것"},{"question":"${section.title}와 관련된 실제 연애 상담에서 자주 나오는 질문 2. 앞의 질문과 완전히 다른 연애 상황으로.","answer":"존댓말로 3~4문장. 구체적인 카드 해석 포함. 반드시 마침표로 끝낼 것"},{"question":"${section.title}와 관련된 실제 연애 상담에서 자주 나오는 질문 3. 앞의 두 질문과 완전히 다른 연애 상황으로.","answer":"존댓말로 3~4문장. 구체적인 카드 해석 포함. 반드시 마침표로 끝낼 것"}],"quiz":{"question":"🎯 연애 퀴즈: 카드 3장 연애 배열을 제시할 것","hint":"존댓말로 힌트 한 줄","answer":"${INTEGRATED_QUIZ}"}},"summary":["존댓말로 핵심 요약 1","존댓말로 핵심 요약 2","존댓말로 핵심 요약 3","존댓말로 핵심 요약 4"]}`;
+{"title":"${section.title}","cardFile":"${section.card}","cardName":"${section.cardName}","cardDesc":"7~8문장. 이 카드의 연애 핵심 의미. 정방향과 역방향, 실제 연애 예시, 독자가 바로 공감할 수 있는 구체적 내용 포함. 반드시 존댓말로, 마침표로 끝낼 것.","cardTagline":"이 카드의 연애 핵심 메시지 한 줄.","subheadings":[{"title":"🔮 소제목1","body":"2문장. 이 소제목에서 다루는 핵심 연애 내용을 빠짐없이 압축. 반드시 카드 이름을 명시하며 예시를 들 것. 절대 이 카드 라고만 쓰지 말 것. 반드시 존댓말로, 마침표로 끝낼 것."},{"title":"💡 소제목2","body":"2문장. 이 소제목에서 다루는 실전 연애 적용법을 빠짐없이 압축. 반드시 카드 이름을 명시하며 그 카드가 나왔을 때 어떻게 활용하는지 설명할 것. 절대 이 카드 라고만 쓰지 말 것. 반드시 존댓말로, 마침표로 끝낼 것."},{"title":"💬 소제목3","body":"2문장. 이 소제목에서 다루는 연애 예시를 빠짐없이 압축. 반드시 카드 이름을 명시하며 그 카드가 어떤 의미인지 설명하고 나서 예시를 들 것. 절대 이 카드 라고만 쓰지 말 것. 반드시 존댓말로, 마침표로 끝낼 것. 절대 빈칸으로 두지 말 것."}],"extraCards":[${section.extraCards.map(c=>`{"file":"${c.file}","name":"${c.name}","interp":"연애 리딩에서 한 줄 의미. 존댓말로."}`).join(",")}],"badExamples":["잘못된 연애 해석 구체적 예시 1","잘못된 연애 해석 구체적 예시 2","잘못된 연애 해석 구체적 예시 3","잘못된 연애 해석 구체적 예시 4"],"goodExamples":["올바른 연애 해석 구체적 예시 1","올바른 연애 해석 구체적 예시 2","올바른 연애 해석 구체적 예시 3","올바른 연애 해석 구체적 예시 4"],"tableHeaders":["연애 상황","정방향 의미","역방향 의미"],"tableRows":[{"col1":"구체적 연애 상황 1","col2":"정방향일 때 연애 의미","col3":"역방향일 때 연애 의미"},{"col1":"구체적 연애 상황 2","col2":"정방향일 때 연애 의미","col3":"역방향일 때 연애 의미"},{"col1":"구체적 연애 상황 3","col2":"정방향일 때 연애 의미","col3":"역방향일 때 연애 의미"},{"col1":"구체적 연애 상황 4","col2":"정방향일 때 연애 의미","col3":"역방향일 때 연애 의미"},{"col1":"구체적 연애 상황 5","col2":"정방향일 때 연애 의미","col3":"역방향일 때 연애 의미"}],"quote":"연애 리딩 핵심 명언을 존댓말로 한 문장","tip":"실전 연애 리딩 팁을 존댓말로 1문장. 핵심만 압축.","cases":[{"question":"${section.title}와 관련된 실제 연애 상담에서 자주 나오는 질문 1. 반드시 실제 연애 고민 상황으로 카드 해석이 포함된 질문. 다른 케이스와 완전히 다른 상황으로.","answer":"존댓말로 3~4문장. 구체적인 카드 해석 포함. 반드시 마침표로 끝낼 것"},{"question":"${section.title}와 관련된 실제 연애 상담에서 자주 나오는 질문 2. 앞의 질문과 완전히 다른 연애 상황으로.","answer":"존댓말로 3~4문장. 구체적인 카드 해석 포함. 반드시 마침표로 끝낼 것"},{"question":"${section.title}와 관련된 실제 연애 상담에서 자주 나오는 질문 3. 앞의 두 질문과 완전히 다른 연애 상황으로.","answer":"존댓말로 3~4문장. 구체적인 카드 해석 포함. 반드시 마침표로 끝낼 것"}],"quiz":{"question":"🎯 연애 퀴즈: [구체적 연애 고민 한 줄] → [카드1/카드2/카드3] 나왔을 때 어떻게 해석할까요? (1~2줄 이내로 짧게)","hint":"존댓말로 힌트 한 줄","answer":"${INTEGRATED_QUIZ}"}},"summary":["존댓말로 핵심 요약 1","존댓말로 핵심 요약 2","존댓말로 핵심 요약 3","존댓말로 핵심 요약 4"]}`;
 }
 export async function POST(req: NextRequest) {
   try {
