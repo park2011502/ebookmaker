@@ -509,8 +509,8 @@ export async function POST(req: NextRequest) {
     const section = chapter.sections[sectionIndex];
     if (!section) return NextResponse.json({ error: "섹션을 찾을 수 없습니다." }, { status: 400 });
     const msg = await client.messages.create({
-      model: "claude-opus-4-5",
-      max_tokens: chapter.number === 2 ? 12000 : 16000,
+      model: "claude-sonnet-4-20250514",
+      max_tokens: 8192,
       messages: [{ role: "user", content: buildSectionPrompt(chapter.number, chapter.title, section, sectionIndex) }],
     });
     const raw = msg.content[0];
@@ -520,8 +520,8 @@ export async function POST(req: NextRequest) {
     try { secData = JSON.parse(jsonStr); }
     catch {
       const retryMsg = await client.messages.create({
-        model: "claude-opus-4-5",
-        max_tokens: chapter.number === 2 ? 12000 : 16000,
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 8192,
         messages: [{ role: "user", content: buildSectionPrompt(chapter.number, chapter.title, section, sectionIndex) }],
       });
       const retryRaw = retryMsg.content[0];
