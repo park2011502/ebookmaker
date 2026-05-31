@@ -249,9 +249,8 @@ export async function POST(req: NextRequest) {
     const sec = ch.sections[sectionIndex];
     if (!sec) return NextResponse.json({ error: "섹션을 찾을 수 없습니다." }, { status: 400 });
 
-    // 질문 번호: 챕터별 100개, 섹션별 10개
-    const chapterStartNum = (chIdx * 100) + 1;
-    const startNum = chapterStartNum + (sectionIndex * 10);
+    // 질문 번호: 챕터별 1번부터 시작, 섹션별 10개
+    const startNum = (sectionIndex * 10) + 1;
 
     const msg = await client.messages.create({
       model: "claude-opus-4-5",
