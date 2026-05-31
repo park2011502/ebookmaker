@@ -4,28 +4,44 @@ import { useState } from "react";
 
 const CHAPTERS = [
   { chapterIndex: 0, label: "표지", items: [{ sectionIndex: -1, label: "표지" }] },
-  { chapterIndex: 1, label: "CH 01 · 💕 연애 질문 리스트", items: [
+  { chapterIndex: 1, label: "CH 01 · 💕 연애 질문 리스트 100", items: [
     { sectionIndex: -1, label: "오프너" },
-    { sectionIndex: 0, label: "썸·고백 단계 (Q1~10)" },
-    { sectionIndex: 1, label: "연애 중·권태기 (Q11~20)" },
-    { sectionIndex: 2, label: "이별·재회 (Q21~30)" },
+    { sectionIndex: 0, label: "썸·설렘 단계 (Q1~10)" },
+    { sectionIndex: 1, label: "고백·타이밍 (Q11~20)" },
+    { sectionIndex: 2, label: "연애 중·감정 확인 (Q21~30)" },
+    { sectionIndex: 3, label: "권태기·신뢰 문제 (Q31~40)" },
+    { sectionIndex: 4, label: "미래·결혼 전망 (Q41~50)" },
+    { sectionIndex: 5, label: "이별·감정 정리 (Q51~60)" },
+    { sectionIndex: 6, label: "재회·연락 가능성 (Q61~70)" },
+    { sectionIndex: 7, label: "상대 마음 읽기 (Q71~80)" },
+    { sectionIndex: 8, label: "삼각관계·복잡한 상황 (Q81~90)" },
+    { sectionIndex: 9, label: "나를 위한 연애 리딩 (Q91~100)" },
   ]},
-  { chapterIndex: 2, label: "CH 02 · 💰 금전 질문 리스트", items: [
+  { chapterIndex: 2, label: "CH 02 · 💰 금전 질문 리스트 100", items: [
     { sectionIndex: -1, label: "오프너" },
-    { sectionIndex: 0, label: "수입·투자 (Q31~40)" },
-    { sectionIndex: 1, label: "지출·손재수 (Q41~50)" },
-    { sectionIndex: 2, label: "사업·창업 (Q51~60)" },
+    { sectionIndex: 0, label: "수입 흐름·돈이 들어올까 (Q1~10)" },
+    { sectionIndex: 1, label: "투자·재테크 타이밍 (Q11~20)" },
+    { sectionIndex: 2, label: "지출·손재수 파악 (Q21~30)" },
+    { sectionIndex: 3, label: "부채·빚 해결 (Q31~40)" },
+    { sectionIndex: 4, label: "사업·창업 가능성 (Q41~50)" },
+    { sectionIndex: 5, label: "동업·계약·파트너십 (Q51~60)" },
+    { sectionIndex: 6, label: "직장 연봉·성과급 (Q61~70)" },
+    { sectionIndex: 7, label: "부동산·큰 자산 (Q71~80)" },
+    { sectionIndex: 8, label: "금전 운·전반적 흐름 (Q81~90)" },
+    { sectionIndex: 9, label: "풍요 마인드·금전 에너지 (Q91~100)" },
   ]},
-  { chapterIndex: 3, label: "CH 03 · 💼 직업 질문 리스트", items: [
+  { chapterIndex: 3, label: "CH 03 · 💼 직업 질문 리스트 100", items: [
     { sectionIndex: -1, label: "오프너" },
-    { sectionIndex: 0, label: "취업·이직 (Q61~70)" },
-    { sectionIndex: 1, label: "승진·직장생활 (Q71~80)" },
-    { sectionIndex: 2, label: "적성·창업 (Q81~90)" },
-  ]},
-  { chapterIndex: 4, label: "CH 04 · 🔮 자기성찰 질문 리스트", items: [
-    { sectionIndex: -1, label: "오프너" },
-    { sectionIndex: 0, label: "나 자신 탐구 (Q91~100)" },
-    { sectionIndex: 1, label: "미래·방향 (Q101~110)" },
+    { sectionIndex: 0, label: "취업·합격 가능성 (Q1~10)" },
+    { sectionIndex: 1, label: "이직·직장 변화 (Q11~20)" },
+    { sectionIndex: 2, label: "승진·인사 평가 (Q21~30)" },
+    { sectionIndex: 3, label: "직장 내 관계·갈등 (Q31~40)" },
+    { sectionIndex: 4, label: "연봉 협상·처우 (Q41~50)" },
+    { sectionIndex: 5, label: "창업·독립 가능성 (Q51~60)" },
+    { sectionIndex: 6, label: "사업 운영·파트너십 (Q61~70)" },
+    { sectionIndex: 7, label: "적성·나에게 맞는 일 (Q71~80)" },
+    { sectionIndex: 8, label: "직업 전환·새로운 분야 (Q81~90)" },
+    { sectionIndex: 9, label: "커리어 성장·미래 전망 (Q91~100)" },
   ]},
 ];
 
@@ -93,7 +109,7 @@ export default function QuestionPage() {
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>타로에게 묻는 질문 리스트 100</title>
+<title>타로에게 묻는 질문 리스트 300</title>
 <style>${allCss}</style>
 </head>
 <body>
@@ -104,7 +120,7 @@ ${allHtml}
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "타로질문리스트100.html";
+    a.download = "타로질문리스트300.html";
     a.click();
     URL.revokeObjectURL(url);
   }
@@ -118,8 +134,8 @@ ${allHtml}
       <div id="ctrl">
         <div className="inner">
           <div className="hd">
-            <h1>타로 질문 리스트 100 생성기</h1>
-            <p>연애·금전·직업·자기성찰 상황별 최적 질문 모음</p>
+            <h1>타로 질문 리스트 300 생성기</h1>
+            <p>연애·금전·직업 주제별 100개씩 총 300개</p>
           </div>
 
           <div className="toc">
